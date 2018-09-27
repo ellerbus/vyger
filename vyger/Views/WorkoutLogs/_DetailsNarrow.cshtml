@@ -30,16 +30,10 @@
       {
         <div class="form-group">
           <label>
-            @Html.HiddenFor(m => log.PlanId)
-            @Html.HiddenFor(m => log.CycleId)
-            @Html.HiddenFor(m => log.WeekId)
-            @Html.HiddenFor(m => log.DayId)
-            @Html.HiddenFor(m => log.ExerciseId)
-            @Html.HiddenFor(m => log.SequenceNumber)
+            @Html.Partial("_PrimaryKey", log)
             @log.Exercise.Category @log.Exercise.Name
           </label>
-          @Html.TextBoxFor(m => log.Workout, new { @class = "form-control workout-pattern" })
-          @Html.ValidationMessageFor(m => log.Workout, "", new { @class = "form-text text-danger" })
+          @Html.Partial("_Entry", log)
         </div>
       }
     }

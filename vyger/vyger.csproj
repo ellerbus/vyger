@@ -213,6 +213,8 @@
     <Content Include="Views\WorkoutLogs\_DetailsNarrow.cshtml" />
     <Content Include="Views\WorkoutPlanLogs\_DetailsNarrow.cshtml" />
     <Content Include="Views\WorkoutPlanLogs\_DetailsWide.cshtml" />
+    <Content Include="Views\WorkoutLogs\_PrimaryKey.cshtml" />
+    <Content Include="Views\WorkoutLogs\_Entry.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

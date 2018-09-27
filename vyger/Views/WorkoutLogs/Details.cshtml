@@ -24,3 +24,47 @@
     </ol>
   </nav>
 }
+
+@section Scripts {
+  <script type="text/javascript">
+    $(function ()
+    {
+      function resequence($tbody)
+      {
+        var ids = [];
+
+        $tbody.find('tr').each(function (idx)
+        {
+          var $exId = $(this).find('input[name$=ExerciseId]');
+          var $seq = $(this).find('input[name$=SequenceNumber]');
+
+          $seq.val(idx + 1);
+
+          ids.push($exId.val());
+        });
+      }
+
+      $('.table-sortable.view-wide').sortable({
+        handle: '.drag-handler',
+        containerSelector: 'table',
+        itemPath: '> tbody',
+        itemSelector: 'tr',
+        placeholder: '<tr class="placeholder"/>',
+        delay: 250,
+        onDrop: function ($item, container, _super)
+        {
+          var $tbody = $item.closest('tbody');
+
+          resequence($tbody);
+
+          _super($item, container);
+        }
+      });
+
+      $('.table-sortable .delete-log').click(function ()
+      {
+        $(this).closest('tr').fadeOut(500, function () { $(this).remove(); });
+      });
+    });
+  </script>
+}

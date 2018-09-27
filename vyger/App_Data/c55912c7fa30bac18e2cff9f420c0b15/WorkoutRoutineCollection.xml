@@ -88,15 +88,15 @@
           <workout-plan-log cycle-id="1" week-id="4" day-id="2" exercise-id="LOW-BA-DLF" sequence-number="1" workout-plan="95x8, 110x8, 120x8" status="None" />
           <workout-plan-log cycle-id="1" week-id="1" day-id="1" exercise-id="LEG-MA-LPR" sequence-number="1" workout-plan="230x5, 270x5, 310x5, 345x5, 385x5" status="Logged" />
           <workout-plan-log cycle-id="1" week-id="2" day-id="1" exercise-id="LEG-MA-LPR" sequence-number="1" workout-plan="245x5, 285x5, 330x5, 370x5, 410x3" status="Logged" />
-          <workout-plan-log cycle-id="1" week-id="3" day-id="1" exercise-id="LEG-MA-LPR" sequence-number="1" workout-plan="260x5, 305x5, 350x5, 390x3, 435x3" status="None" />
+          <workout-plan-log cycle-id="1" week-id="3" day-id="1" exercise-id="LEG-MA-LPR" sequence-number="1" workout-plan="260x5, 305x5, 350x5, 390x3, 435x3" status="Logged" />
           <workout-plan-log cycle-id="1" week-id="4" day-id="1" exercise-id="LEG-MA-LPR" sequence-number="1" workout-plan="220x8, 250x8, 275x8" status="None" />
           <workout-plan-log cycle-id="1" week-id="1" day-id="1" exercise-id="ABS-MA-CRN" sequence-number="6" workout-plan="50x12, 50x12, 50x12" status="Logged" />
           <workout-plan-log cycle-id="1" week-id="2" day-id="1" exercise-id="ABS-MA-CRN" sequence-number="6" workout-plan="50x12, 50x12, 50x12" status="Logged" />
-          <workout-plan-log cycle-id="1" week-id="3" day-id="1" exercise-id="ABS-MA-CRN" sequence-number="6" workout-plan="50x12, 50x12, 50x12" status="None" />
+          <workout-plan-log cycle-id="1" week-id="3" day-id="1" exercise-id="ABS-MA-CRN" sequence-number="6" workout-plan="50x12, 50x12, 50x12" status="Logged" />
           <workout-plan-log cycle-id="1" week-id="4" day-id="1" exercise-id="ABS-MA-CRN" sequence-number="6" workout-plan="50x12, 50x12, 50x12" status="None" />
           <workout-plan-log cycle-id="1" week-id="1" day-id="1" exercise-id="TRA-HA-SHR" sequence-number="4" workout-plan="185x5, 205x5, 230x5" status="Logged" />
           <workout-plan-log cycle-id="1" week-id="2" day-id="1" exercise-id="TRA-HA-SHR" sequence-number="4" workout-plan="195x5, 220x5, 245x3" status="Logged" />
-          <workout-plan-log cycle-id="1" week-id="3" day-id="1" exercise-id="TRA-HA-SHR" sequence-number="4" workout-plan="" status="None" />
+          <workout-plan-log cycle-id="1" week-id="3" day-id="1" exercise-id="TRA-HA-SHR" sequence-number="4" workout-plan="" status="Logged" />
           <workout-plan-log cycle-id="1" week-id="4" day-id="1" exercise-id="TRA-HA-SHR" sequence-number="4" workout-plan="130x8, 145x8, 160x8" status="None" />
           <workout-plan-log cycle-id="1" week-id="1" day-id="2" exercise-id="SHO-HA-PRS" sequence-number="2" workout-plan="80x5, 95x5, 110x5, 120x5, 135x5" status="Logged" />
           <workout-plan-log cycle-id="1" week-id="2" day-id="2" exercise-id="SHO-HA-PRS" sequence-number="2" workout-plan="85x5, 100x5, 110x5, 125x5, 140x3" status="Logged" />
@@ -128,19 +128,19 @@
           <workout-plan-log cycle-id="1" week-id="4" day-id="2" exercise-id="ABS-MA-CRN" sequence-number="8" workout-plan="50x12, 50x12, 50x12" status="None" />
           <workout-plan-log cycle-id="1" week-id="1" day-id="1" exercise-id="TRI-BO-DIP" sequence-number="7" workout-plan="BWx8, BWx8, BWx8" status="Logged" />
           <workout-plan-log cycle-id="1" week-id="2" day-id="1" exercise-id="TRI-BO-DIP" sequence-number="7" workout-plan="BWx8, BWx8, BWx8" status="Logged" />
-          <workout-plan-log cycle-id="1" week-id="3" day-id="1" exercise-id="TRI-BO-DIP" sequence-number="7" workout-plan="BWx8, BWx8, BWx8" status="None" />
+          <workout-plan-log cycle-id="1" week-id="3" day-id="1" exercise-id="TRI-BO-DIP" sequence-number="7" workout-plan="BWx8, BWx8, BWx8" status="Logged" />
           <workout-plan-log cycle-id="1" week-id="4" day-id="1" exercise-id="TRI-BO-DIP" sequence-number="7" workout-plan="BWx8, BWx8, BWx8" status="None" />
           <workout-plan-log cycle-id="1" week-id="1" day-id="1" exercise-id="CHE-MA-FLY" sequence-number="5" workout-plan="90x8, 105x8" status="Logged" />
           <workout-plan-log cycle-id="1" week-id="2" day-id="1" exercise-id="CHE-MA-FLY" sequence-number="5" workout-plan="90x8, 105x8" status="Logged" />
-          <workout-plan-log cycle-id="1" week-id="3" day-id="1" exercise-id="CHE-MA-FLY" sequence-number="5" workout-plan="90x8, 105x8" status="None" />
+          <workout-plan-log cycle-id="1" week-id="3" day-id="1" exercise-id="CHE-MA-FLY" sequence-number="5" workout-plan="90x8, 105x8" status="Logged" />
           <workout-plan-log cycle-id="1" week-id="4" day-id="1" exercise-id="CHE-MA-FLY" sequence-number="5" workout-plan="90x8, 105x8" status="None" />
           <workout-plan-log cycle-id="1" week-id="1" day-id="1" exercise-id="UPP-HA-LOR" sequence-number="3" workout-plan="80x5, 95x5, 110x5, 120x5, 135x5" status="Logged" />
           <workout-plan-log cycle-id="1" week-id="2" day-id="1" exercise-id="UPP-HA-LOR" sequence-number="3" workout-plan="85x5, 100x5, 110x5, 125x5, 140x3" status="Logged" />
-          <workout-plan-log cycle-id="1" week-id="3" day-id="1" exercise-id="UPP-HA-LOR" sequence-number="3" workout-plan="90x5, 105x5, 120x5, 135x3, 150x3" status="None" />
+          <workout-plan-log cycle-id="1" week-id="3" day-id="1" exercise-id="UPP-HA-LOR" sequence-number="3" workout-plan="90x5, 105x5, 120x5, 135x3, 150x3" status="Logged" />
           <workout-plan-log cycle-id="1" week-id="4" day-id="1" exercise-id="UPP-HA-LOR" sequence-number="3" workout-plan="75x8, 85x8, 95x8" status="None" />
           <workout-plan-log cycle-id="1" week-id="1" day-id="1" exercise-id="CHE-DU-IBP" sequence-number="2" workout-plan="35x5, 40x5, 45x5, 50x5, 55x5" status="Logged" />
           <workout-plan-log cycle-id="1" week-id="2" day-id="1" exercise-id="CHE-DU-IBP" sequence-number="2" workout-plan="35x5, 40x5, 50x5, 55x5, 60x3" status="Logged" />
-          <workout-plan-log cycle-id="1" week-id="3" day-id="1" exercise-id="CHE-DU-IBP" sequence-number="2" workout-plan="40x5, 45x5, 50x5, 60x3, 65x3" status="None" />
+          <workout-plan-log cycle-id="1" week-id="3" day-id="1" exercise-id="CHE-DU-IBP" sequence-number="2" workout-plan="40x5, 45x5, 50x5, 60x3, 65x3" status="Logged" />
           <workout-plan-log cycle-id="1" week-id="4" day-id="1" exercise-id="CHE-DU-IBP" sequence-number="2" workout-plan="30x8, 35x8, 40x8" status="None" />
         </workout-plan-logs>
       </workout-plan>

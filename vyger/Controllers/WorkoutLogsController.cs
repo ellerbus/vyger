@@ -259,7 +259,7 @@ namespace vyger.Controllers
             vm.WeekId = week;
             vm.DayId = day;
 
-            return View(vm);
+            return View("Details", vm);
         }
 
         #endregion

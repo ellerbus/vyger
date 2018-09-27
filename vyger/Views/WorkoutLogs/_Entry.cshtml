@@ -1,0 +1,5 @@
+@model WorkoutLog
+
+
+@Html.TextBoxFor(m => m.Workout, new { @class = "form-control workout-pattern" })
+@Html.ValidationMessageFor(m => m.Workout, "", new { @class = "form-text text-danger" })
