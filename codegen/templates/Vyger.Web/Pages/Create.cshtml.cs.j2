@@ -1,0 +1,63 @@
+
+{% import 'types.j2' as types -%}
+{% import 'names.j2' as names with context -%}
+using {{ namespace }}.Common.Models;
+using {{ namespace }}.Common.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace {{ namespace }}.Web.Pages.{{ names.base_classes() }}
+{
+    [Authorize]
+    public class CreateModel : PageModel
+    {
+        #region Members
+
+        private I{{ names.base_class() }}Service _{{ names.var_names() }};
+
+        #endregion
+
+        #region Constructors
+
+        public CreateModel(I{{ names.base_class() }}Service {{ names.var_names() }})
+        {
+            _{{ names.var_names() }} = {{ names.var_names() }};
+        }
+
+        #endregion
+
+        #region Methods
+
+        public IActionResult OnGet()
+        {
+            {{ names.base_class() }} = new {{ names.base_class() }}();
+
+            return new PageResult();
+        }
+
+        public IActionResult OnPost()
+        {
+            if (ModelState.IsValid)
+            {
+                _{{ names.var_names() }}.Save{{ names.base_class() }}({{ names.base_class() }});
+                
+                this.FlashSuccess($"Created {{ names.base_class() | label_case }}");
+
+                return Redirect("~/{{ names.base_classes() }}/Index");
+            }
+
+            this.FlashDanger($"Validation errors were found");
+            
+            return new PageResult();
+        }
+
+        #endregion
+
+        #region Properties
+
+        [BindProperty]
+        public {{ names.base_class() }} {{ names.base_class() }} { get; set; }
+
+        #endregion
+    }
+}

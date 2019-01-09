@@ -1,0 +1,84 @@
+{%- macro typescript_type(column) -%}
+{% set class_name = column.type.__class__.__name__.lower() -%}
+{% if class_name == 'array' %}any{% endif -%}
+{% if class_name == 'bigint' %}number{% endif -%}
+{% if class_name == 'biginteger' %}number{% endif -%}
+{% if class_name == 'binary' %}number{% endif -%}
+{% if class_name == 'blob' %}any{% endif -%}
+{% if class_name == 'boolean' %}boolean{% endif -%}
+{% if class_name == 'char' %}string{% endif -%}
+{% if class_name == 'clob' %}any{% endif -%}
+{% if class_name == 'date' %}Date{% endif -%}
+{% if class_name == 'datetime' %}Date{% endif -%}
+{% if class_name == 'decimal' %}number{% endif -%}
+{% if class_name == 'enum' %}number|string{% endif -%}
+{% if class_name == 'float' %}number{% endif -%}
+{% if class_name == 'int' %}number{% endif -%}
+{% if class_name == 'integer' %}number{% endif -%}
+{% if class_name == 'interval' %}any{% endif -%}
+{% if class_name == 'json' %}any{% endif -%}
+{% if class_name == 'largebinary' %}any{% endif -%}
+{% if class_name == 'nchar' %}string{% endif -%}
+{% if class_name == 'nvarchar' %}string{% endif -%}
+{% if class_name == 'numeric' %}number{% endif -%}
+{% if class_name == 'pickletype' %}any{% endif -%}
+{% if class_name == 'real' %}number{% endif -%}
+{% if class_name == 'smallint' %}number{% endif -%}
+{% if class_name == 'smallinteger' %}number{% endif -%}
+{% if class_name == 'string' %}string{% endif -%}
+{% if class_name == 'text' %}string{% endif -%}
+{% if class_name == 'time' %}Date{% endif -%}
+{% if class_name == 'timestamp' %}Date{% endif -%}
+{% if class_name == 'typedecorator' %}any{% endif -%}
+{% if class_name == 'unicode' %}string{% endif -%}
+{% if class_name == 'unicodetext' %}string{% endif -%}
+{% if class_name == 'varbinary' %}any{% endif -%}
+{% if class_name == 'varchar' %}string{% endif -%}
+{%- endmacro -%}
+
+{%- macro cs_type(column) -%}
+{% set class_name = column.type.__class__.__name__.lower() -%}
+{%- if class_name in ['char', 'nchar', 'varchar', 'nvarchar', 'text', 'string', 'unicode', 'unicodetext'] -%}
+    string
+{%- elif class_name in ['date', 'datetime', 'time', 'timestamp'] -%}
+    DateTime{%- if column.nullable %}?{% endif -%}
+{%- elif class_name in ['int', 'integer', 'smallint', 'smallinteger'] -%}
+    int{%- if column.nullable %}?{% endif -%}
+{%- elif class_name in ['float', 'decimal', 'numeric', 'real'] -%}
+    double{%- if column.nullable %}?{% endif -%}
+{%- elif class_name in ['bool', 'boolean', 'bit'] -%}
+    bool{%- if column.nullable %}?{% endif -%}
+{%- elif class_name in ['binary', 'varbinary', 'largebinary', 'blob', 'clob'] -%}
+    byte[]
+{%- else -%}
+    unknown
+{%- endif -%}
+{%- endmacro -%}
+
+{%- macro sql_type(column) -%}
+{% set class_name = column.type.__class__.__name__.lower() -%}
+{%- if class_name in ['char', 'nchar', 'varchar', 'nvarchar'] -%}
+    {{ class_name }}({{ column.type.length }})
+{%- else -%}
+    {{ class_name }}
+{%- endif -%}
+{%- endmacro -%}
+
+{%- macro cs_test_value(column) -%}
+{% set class_name = column.type.__class__.__name__.lower() -%}
+{%- if class_name in ['char', 'nchar', 'varchar', 'nvarchar', 'text', 'string', 'unicode', 'unicodetext'] -%}
+    "{{ column.name | pascal_case }}" + seed
+{%- elif class_name in ['date', 'datetime', 'time', 'timestamp'] -%}
+    {%- if column.nullable %}null{% else %}DateTime.Now.Date.AddDays(seed){% endif -%}
+{%- elif class_name in ['int', 'integer', 'smallint', 'smallinteger'] -%}
+    {%- if column.nullable %}null{% else %}seed{% endif -%}
+{%- elif class_name in ['float', 'decimal', 'numeric', 'real'] -%}
+    {%- if column.nullable %}null{% else %}seed{% endif -%}
+{%- elif class_name in ['bool', 'boolean', 'bit'] -%}
+    {%- if column.nullable %}null{% else %}false{% endif -%}
+{%- elif class_name in ['binary', 'varbinary', 'largebinary', 'blob', 'clob'] -%}
+    null
+{%- else -%}
+    unknown
+{%- endif -%}
+{%- endmacro -%}

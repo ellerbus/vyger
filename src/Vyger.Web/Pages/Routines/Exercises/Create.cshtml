@@ -1,0 +1,120 @@
+@page
+@model Vyger.Web.Pages.RoutineExercises.CreateModel
+@{
+  ViewData["Title"] = "Create Routine Exercise";
+}
+
+<form method="post" class="col-lg-6 col-md-6 mx-auto">
+  <div asp-validation-summary="All"></div>
+
+  @*
+    <div class="form-group mb-1">
+      <select class="form-control" asp-for="Exercise.Group" asp-items="Html.GetEnumSelectList<ExerciseGroups>()"></select>
+      <span class="form-text text-danger" asp-validation-for="Exercise.Group"></span>
+    </div>
+
+    <div class="form-group mb-1">
+      <select class="form-control" asp-for="Exercise.Category" asp-items="Html.GetEnumSelectList<ExerciseCategories>()"></select>
+      <span class="form-text text-danger" asp-validation-for="Exercise.Category"></span>
+    </div>
+  *@
+
+  <div class="form-group">
+    <select class="form-control" asp-for="Exercise.Id">
+      <option value="">(select exercise)</option>
+      @foreach (var exercise in Model.Exercises)
+      {
+        <option value="@exercise.Id"
+                data-group="@exercise.Group"
+                data-category="@exercise.Category">
+          @exercise.DisplayName
+        </option>
+      }
+    </select>
+    <span class="form-text text-danger" asp-validation-for="Exercise.Id"></span>
+  </div>
+
+  <div class="form-group">
+    <label asp-for="Routine.Sets"></label>
+  </div>
+
+  <div data-bind="foreach: sets">
+    <div class="form-group p-0 m-0 mb-1">
+      <input type="hidden" name="Exercise.Sets.Index" data-bind="value: $index" />
+      <div class="input-group">
+        <input class="form-control" data-bind="value: $data, attr: { name: 'Exercise.Sets['+$index()+']' }" />
+        <div class="input-group-append">
+          <span class="input-group-text" data-bind="click: $root.removeSet">
+            <span class="fa fa-fw fa-times text-danger pointer"></span>
+          </span>
+          <span class="input-group-text" data-bind="click: $root.addSet">
+            <span class="fa fa-fw fa-plus text-muted pointer"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group text-right mt-3">
+    <button class="btn btn-primary">Save</button>
+    <a class="btn btn-outline-secondary"
+       asp-page="/Routines/Exercises/Index"
+       asp-route-id="@Model.Routine.Id"
+       asp-route-day="@Model.SelectedDay">Cancel</a>
+  </div>
+</form>
+
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a asp-page="/Index">Home</a></li>
+      <li class="breadcrumb-item">
+        <a asp-page="/Routines/Update" asp-route-id="@Model.Routine.Id">
+          @Model.Routine.Name
+        </a>
+      </li>
+      <li class="breadcrumb-item">
+        <a asp-page="/Routines/Exercises/Index" asp-route-id="@Model.Routine.Id">
+          Exercises
+        </a>
+      </li>
+      <li class="breadcrumb-item active">
+        Creating
+        <i class="fa fa-fw fa-filter text-muted"></i>
+        <span>Day=</span>@Model.SelectedDay
+      </li>
+    </ol>
+  </nav>
+}
+
+@section Scripts {
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+
+  <script type="text/javascript">
+    function WorkoutSetsViewModel()
+    {
+      var self = this;
+
+      self.sets = ko.observableArray(@Json.Serialize(Model.Exercise.Sets));
+
+      self.addSet = function (set)
+      {
+        var idx = self.sets.indexOf(set);
+
+        self.sets.splice(idx+1, 0, '');
+      }
+
+      self.removeSet = function (set)
+      {
+        self.sets.remove(set);
+
+        if (self.sets().length == 0)
+        {
+          self.addSet();
+        }
+      }
+    }
+
+    ko.applyBindings(new WorkoutSetsViewModel());
+  </script>
+}

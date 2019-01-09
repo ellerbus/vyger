@@ -1,0 +1,14 @@
+{%- macro base_class() -%}
+{{ table.name | pascal_case }}
+{%- endmacro -%}
+{%- macro base_classes() -%}
+{{ base_class() | plural }}
+{%- endmacro -%}
+{%- macro var_name() -%}
+{%- set list = table.name|label_case -%}
+{%- set items = list.split(' ') -%}
+{{ items[-1] | lower }}
+{%- endmacro -%}
+{%- macro var_names() -%}
+{{ var_name() | plural }}
+{%- endmacro -%}

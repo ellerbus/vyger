@@ -1,0 +1,51 @@
+@page
+@model Vyger.Web.Pages.Routines.IndexModel
+@{
+  ViewData["Title"] = "Routines";
+}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th colspan="2">Name</th>
+      <th class="create-col">
+        <a class="btn btn-outline-success float-right" asp-page="/Routines/Create">
+          Create
+        </a>
+      </th>
+    </tr>
+  </thead>
+  @foreach (var routine in Model.Routines)
+  {
+    <tr>
+      <td>
+        @routine.Name
+      </td>
+      <td class="update-col">
+        <a class="btn btn-outline-secondary float-right"
+           asp-page="/Routines/Exercises/Index"
+           asp-route-id="@routine.Id">
+          Exercises
+        </a>
+      </td>
+      <td>
+        <a class="btn btn-outline-secondary float-right"
+           asp-page="/Routines/Update"
+           asp-route-id="@routine.Id">
+          Update
+        </a>
+      </td>
+    </tr>
+  }
+</table>
+
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a asp-page="/Index">Home</a></li>
+      <li class="breadcrumb-item active">
+        Routines
+      </li>
+    </ol>
+  </nav>
+}

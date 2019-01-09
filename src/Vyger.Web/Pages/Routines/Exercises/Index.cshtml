@@ -1,0 +1,116 @@
+@page "{id}"
+@using Augment
+@model Vyger.Web.Pages.RoutineExercises.IndexModel
+@{
+  ViewData["Title"] = "Routine Exercises";
+}
+
+<table class="table dnd-table" id="routine-exercises">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Exercise</th>
+      <th>Workout</th>
+      <th class="create-col">
+        <a class="btn btn-outline-success float-right"
+           asp-page="/Routines/Exercises/Create"
+           asp-route-id="@Model.Routine.Id">
+          Create
+        </a>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var exercise in Model.Exercises)
+    {
+      <tr id="@(exercise.Id)">
+        <td class="drag-handler"></td>
+        <td>
+          <a class="pointer float-right"
+             asp-page="/Routines/Exercises/Delete"
+             asp-route-id="@Model.Routine.Id"
+             asp-route-day="@Model.SelectedDay"
+             asp-route-exercise="@exercise.Id">
+            <span class="fa fa-fw fa-times text-danger"></span>
+          </a>
+          @exercise.DisplayName
+        </td>
+        <td>
+          @exercise.Sets.Join(", ")
+        </td>
+        <td>
+          <a class="btn btn-outline-secondary float-right"
+             asp-page="/Routines/Exercises/Update"
+             asp-route-id="@Model.Routine.Id"
+             asp-route-day="@Model.SelectedDay"
+             asp-route-exercise="@exercise.Id">
+            Update
+          </a>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<form asp-page-handler="SortExercises" method="post" style="display:none;" id="sort-exercises">
+  <input type="hidden" name="ids" />
+</form>
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a asp-page="/Index">Home</a></li>
+      <li class="breadcrumb-item">
+        <a asp-page="/Routines/Update" asp-route-id="@Model.Routine.Id">
+          @Model.Routine.Name
+        </a>
+      </li>
+      <li class="breadcrumb-item active">
+        Exercises
+        <i class="fa fa-fw fa-filter text-muted"></i>
+        <span>Week=</span>@Model.SelectedWeek
+        <span>Day=</span>@Model.SelectedDay
+      </li>
+    </ol>
+  </nav>
+}
+@section Scripts {
+  <script src="//cdnjs.cloudflare.com/ajax/libs/TableDnD/1.0.3/jquery.tablednd.min.js"></script>
+  <script type="text/javascript">
+    function getExercises()
+    {
+      var ids = [];
+
+      $('#routine-exercises tbody tr').each(function (idx, el)
+      {
+        ids.push($(this).attr('id'));
+      });
+
+      return ids;
+    }
+
+    function submitForm()
+    {
+      var ids = getExercises();
+
+      $('input[name=ids]').val(ids);
+
+      $('#sort-exercises').submit();
+    }
+
+    $(function ()
+    {
+      var options = {
+        dragHandle: '.drag-handler',
+        onDragClass: 'drag-class',
+        onDrop: function (table, row)
+        {
+          submitForm();
+        }
+      };
+
+      $("div.alert").fadeOut(3000);
+
+      $("table.dnd-table").tableDnD(options);
+    });
+  </script>
+}

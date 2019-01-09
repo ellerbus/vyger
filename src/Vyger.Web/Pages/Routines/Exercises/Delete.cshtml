@@ -1,0 +1,48 @@
+﻿@page
+@model Vyger.Web.Pages.Routines.Exercises.DeleteModel
+@{
+  ViewData["Title"] = "Delete Routine Exercise";
+}
+
+<form method="post" class="col-lg-6 col-md-6 mx-auto">
+  <div asp-validation-summary="All"></div>
+
+  <div class="form-group mb-1">
+    <div class="form-control">
+      @Model.Exercise.DisplayName
+    </div>
+  </div>
+
+  <div class="form-group text-right">
+    <button class="btn btn-danger">Delete</button>
+    <a class="btn btn-outline-secondary"
+       asp-page="/Routines/Exercises/Index"
+       asp-route-id="@Model.Routine.Id"
+       asp-route-day="@Model.SelectedDay">
+      Cancel
+    </a>
+  </div>
+</form>
+
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a asp-page="/Index">Home</a></li>
+      <li class="breadcrumb-item">
+        <a asp-page="/Routines/Update" asp-route-id="@Model.Routine.Id">
+          @Model.Routine.Name
+        </a>
+      </li>
+      <li class="breadcrumb-item">
+        <a asp-page="/Routines/Exercises/Index" asp-route-id="@Model.Routine.Id">
+          Exercises
+        </a>
+      </li>
+      <li class="breadcrumb-item active">
+        Deleting
+        <i class="fa fa-fw fa-filter text-muted"></i>
+        <span>Day=</span>@Model.SelectedDay
+      </li>
+    </ol>
+  </nav>
+}

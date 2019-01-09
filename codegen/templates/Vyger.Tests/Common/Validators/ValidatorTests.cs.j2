@@ -1,0 +1,50 @@
+{% import 'types.j2' as types -%}
+{% import 'names.j2' as names with context -%}
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using FluentValidation.TestHelper;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using {{ namespace }}.Common.Models;
+using {{ namespace }}.Common.Validators;
+
+namespace {{ namespace }}.Tests.Common.Validators
+{
+    [TestClass]
+    public class {{ names.base_class() }}ValidatorTests : BaseValidatorTests<{{ names.base_class() }}Validator>
+    {
+        #region Members
+
+        [TestInitialize]
+        public override void TestInitialize()
+        {
+            base.TestInitialize();
+        }
+
+        #endregion
+        
+        #region Validation Rule Tests
+        {% for column in table.columns %}
+        [TestMethod]
+        public void {{ names.base_class() }}Validator_RuleFor_{{ column.name | pascal_case }}()
+        {
+            var item = new {{ names.base_class() }}();
+
+            item.{{ column.name | pascal_case }} = default({{ types.cs_type(column) }});
+            SubjectUnderTest.ShouldNotHaveValidationErrorFor(v => v.{{ column.name | pascal_case }}, item);
+            {% if types.cs_type(column) == 'string' %}
+            item.{{ column.name | pascal_case }} = "";
+            SubjectUnderTest.ShouldHaveValidationErrorFor(v => v.{{ column.name | pascal_case }}, item);
+            
+            item.{{ column.name | pascal_case }} = new string('0', {{ column.type.length }});
+            SubjectUnderTest.ShouldNotHaveValidationErrorFor(v => v.{{ column.name | pascal_case }}, item);
+            
+            item.{{ column.name | pascal_case }} = new string('0', {{ column.type.length }} + 1);
+            SubjectUnderTest.ShouldHaveValidationErrorFor(v => v.{{ column.name | pascal_case }}, item);
+            {% endif %}
+        }
+        
+        {% endfor %}
+        #endregion
+    }
+}

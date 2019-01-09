@@ -1,0 +1,44 @@
+{% import 'types.j2' as types -%}
+{% import 'names.j2' as names with context -%}
+using {{ namespace }}.Common.Models;
+using {{ namespace }}.Common.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace {{ namespace }}.Web.Pages.{{ names.base_classes() }}
+{
+    [Authorize]
+    public class IndexModel : PageModel
+    {
+        #region Members
+
+        private I{{ names.base_class() }}Service _{{ names.var_names() }};
+
+        #endregion
+
+        #region Constructors
+
+        public IndexModel(I{{ names.base_class() }}Service {{ names.var_names() }})
+        {
+            _{{ names.var_names() }} = {{ names.var_names() }};
+        }
+
+        #endregion
+
+        #region Methods
+
+        public void OnGet()
+        {
+            {{ names.base_classes() }} = _{{ names.var_names() }}.Get{{ names.base_class() }}Collection();
+        }
+
+        #endregion
+
+        #region Properties
+
+        [BindProperty]
+        public {{ names.base_class() }}Collection {{ names.base_classes() }} { get; set; }
+
+        #endregion
+    }
+}

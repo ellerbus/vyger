@@ -1,0 +1,41 @@
+@page
+@model Vyger.Web.Pages.Exercises.CreateModel
+@{
+  ViewData["Title"] = "Create Exercise";
+}
+
+<form method="post" class="col-lg-6 col-md-6 mx-auto">
+  <div asp-validation-summary="All"></div>
+
+  <div class="form-group mb-1">
+    <select class="form-control" asp-for="Exercise.Group" asp-items="Html.GetEnumSelectList<ExerciseGroups>()"></select>
+    <span class="form-text text-danger" asp-validation-for="Exercise.Group"></span>
+  </div>
+
+  <div class="form-group mb-1">
+    <select class="form-control" asp-for="Exercise.Category" asp-items="Html.GetEnumSelectList<ExerciseCategories>()"></select>
+    <span class="form-text text-danger" asp-validation-for="Exercise.Category"></span>
+  </div>
+
+  <div class="form-group">
+    <input class="form-control" asp-for="Exercise.Name" />
+    <span class="form-text text-danger" asp-validation-for="Exercise.Name"></span>
+  </div>
+
+  <div class="form-group text-right">
+    <button class="btn btn-primary">Save</button>
+    <a class="btn btn-outline-secondary" asp-page="/Exercises/Index">Cancel</a>
+  </div>
+</form>
+
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a asp-page="/Index">Home</a></li>
+      <li class="breadcrumb-item"><a asp-page="/Exercises/Index">Exercises</a></li>
+      <li class="breadcrumb-item active">
+        Creating Exercise
+      </li>
+    </ol>
+  </nav>
+}

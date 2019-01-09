@@ -1,0 +1,25 @@
+{% import 'types.j2' as types -%}
+{% import 'names.j2' as names with context -%}
+using System;
+using FluentAssertions;
+using Vyger.Common.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace {{ namespace }}.Tests.Common.Models
+{
+    [TestClass]
+    public class {{ names.base_class() }}ModelTests
+    {
+		{% for column in table.columns %}
+        //[TestMethod]
+        //public void {{ names.base_class() }}_{{ column.name | pascal_case }}_Should_DoSomething()
+        //{
+        //    //  arrange
+        //    //  act
+        //    var {{ names.var_name() }} = new {{ names.base_class() }}() { {{ column.name | pascal_case }} = ? };
+        //    //  assert
+        //    {{ names.var_name() }}.{{ column.name | pascal_case }}.Should().Be(?);
+        //}
+		{% endfor %}
+    }    
+}

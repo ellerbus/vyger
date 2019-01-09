@@ -1,0 +1,80 @@
+{% import 'types.j2' as types -%}
+{% import 'names.j2' as names with context -%}
+using {{ namespace }}.Common;
+using {{ namespace }}.Common.Models;
+using {{ namespace }}.Common.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace {{ namespace }}.Web.Pages.{{ names.base_classes() }}
+{
+    [Authorize]
+    public class UpdateModel : PageModel
+    {
+        #region Members
+
+        private I{{ names.base_class() }}Service _{{ names.var_names() }};
+
+        #endregion
+
+        #region Constructors
+
+        public UpdateModel(I{{ names.base_class() }}Service {{ names.var_names() }})
+        {
+            _{{ names.var_names() }} = {{ names.var_names() }};
+        }
+
+        #endregion
+
+        #region Methods
+
+        public IActionResult OnGet({% for column in table.primary_key %}{{ types.cs_type(column) }} {{ column.name | camel_case }}{% if not loop.last %}, {% endif %}{% endfor %})
+        {
+            {{ names.base_class() }} = _{{ names.var_names() }}.Get{{ names.base_class() }}({% for column in table.primary_key %}{{ column.name | camel_case }}{% if not loop.last %}, {% endif %}{% endfor %});
+
+            if ({{ names.base_class() }} == null)
+            {
+                this.FlashWarning($"Could not find requested {{ names.base_class() | label_case }}");
+            
+                return Redirect("~/{{ names.base_classes() }}/Index");
+            }
+
+            return new PageResult();
+        }
+
+        public IActionResult OnPost({% for column in table.primary_key %}{{ types.cs_type(column) }} {{ column.name | camel_case }}{% if not loop.last %}, {% endif %}{% endfor %})
+        {
+            if (ModelState.IsValid)
+            {
+                string[] inputs = new[]
+                {
+                    nameof({{ names.base_class() }}.Status),
+                    nameof({{ names.base_class() }}.StatusEnum)
+                };
+
+                {{ names.base_class() }} cache = _{{ names.var_names() }}.Get{{ names.base_class() }}({{ names.var_name() }}Id);
+
+                {{ names.base_class() }}.OverlayFrom(cache, inputs);
+
+                _{{ names.var_names() }}.Update{{ names.base_class() }}({{ names.base_class() }});
+                
+                this.FlashSuccess($"Saved {{ names.base_class() | label_case }}");
+
+                return Redirect("~/{{ names.base_classes() }}/Index");
+            }
+
+            this.FlashDanger($"Validation errors were found");
+
+            return new PageResult();
+        }
+
+        #endregion
+
+        #region Properties
+
+        [BindProperty]
+        public {{ names.base_class() }} {{ names.base_class() }} { get; set; }
+
+        #endregion
+    }
+}

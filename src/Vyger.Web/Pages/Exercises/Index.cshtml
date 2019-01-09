@@ -1,0 +1,60 @@
+@page
+@model Vyger.Web.Pages.Exercises.IndexModel
+@{
+  ViewData["Title"] = "Exercises";
+}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>
+        Name
+      </th>
+      <th class="create-col">
+        <a class="btn btn-outline-success float-right" asp-page="/Exercises/Create">Create</a>
+      </th>
+    </tr>
+  </thead>
+  @foreach (var exercise in Model.Exercises)
+  {
+    <tr>
+      <td>
+        <a asp-page="/Exercises/Index" asp-route-group="@exercise.Group">
+          @exercise.Group
+        </a>
+        -
+        <a asp-page="/Exercises/Index" asp-route-category="@exercise.Category">
+          @exercise.Category
+        </a>
+        -
+        @exercise.Name
+      </td>
+      <td>
+        <a class="btn btn-outline-secondary float-right"
+           asp-page="/Exercises/Update"
+           asp-route-id="@exercise.Id">
+          Update
+        </a>
+      </td>
+    </tr>
+  }
+</table>
+
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a asp-page="/Index">Home</a></li>
+      <li class="breadcrumb-item active">
+        Exercises
+        @if (Model.SelectedCategory != ExerciseCategories.None)
+        {
+          <i class="fa fa-fw fa-filter text-muted"></i> <span>Category=</span>@Model.SelectedCategory
+        }
+        @if (Model.SelectedGroup != ExerciseGroups.None)
+        {
+          <i class="fa fa-fw fa-filter text-muted"></i> <span>Group=</span>@Model.SelectedGroup
+        }
+      </li>
+    </ol>
+  </nav>
+}

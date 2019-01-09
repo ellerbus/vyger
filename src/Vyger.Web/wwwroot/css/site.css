@@ -1,0 +1,85 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-top: 75px;
+    margin-bottom: 60px;
+    background-color: #efefef;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto', sans-serif;
+}
+
+div.form-control {
+    background-color: #eee;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    height: 60px;
+    line-height: 60px;
+}
+
+.workout-sets {
+    font-size: .9em;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+table th.create-col,
+table td.create-col,
+table th.update-col,
+table td.update-col {
+    width: 100px;
+}
+
+a.icon-google {
+    margin-right: 10px;
+    background: #dc4b38 none repeat scroll 0 0;
+    border-radius: 3px;
+    color: #ffffff;
+    font-size: 13px;
+    line-height: 28px;
+    padding: 7px 15px;
+    vertical-align: middle;
+}
+
+a.icon-google:hover {
+    color: #ccc;
+}
+
+a.icon-google .fa-google {
+    font-size: 19px;
+    padding-right: 16px;
+    padding-top: 2px;
+    vertical-align: top;
+    display: inline-block;
+}
+
+.drag-handler {
+    width: 1.4em;
+    position: relative;
+    background-color: #E4E6EB;
+    background-image: linear-gradient(45deg, #E4E6EB, #E4E6EB 2px, #fff 2px, #fff 4px, #E4E6EB 4px, #E4E6EB 9px, #fff 9px, #fff 11px, #E4E6EB 11px, #E4E6EB 16px, #fff 16px, #fff 18px, #E4E6EB 18px, #E4E6EB 22px);
+    background-size: 10px 20px;
+    cursor: move;
+}
+
+.drag-handler:active {
+    background-image: linear-gradient(45deg, #bab86c, #bab86c 2px, #fff 2px, #fff 4px, #bab86c 4px, #bab86c 9px, #fff 9px, #fff 11px, #bab86c 11px, #bab86c 16px, #fff 16px, #fff 18px, #bab86c 18px, #bab86c 22px);
+    background-size: 10px 20px;
+}
+
+.drag-class {
+    border-width: 3px;
+    background-color: lightgoldenrodyellow;
+}

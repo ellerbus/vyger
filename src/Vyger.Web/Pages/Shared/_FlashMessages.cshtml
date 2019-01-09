@@ -1,0 +1,13 @@
+@{
+  FlashMessageCollection messages = TempData.Get<FlashMessageCollection>();
+}
+@if (messages != null && messages.Count > 0)
+{
+  foreach (var message in messages)
+  {
+    <div class="alert alert-@message.Type alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      @message.Message
+    </div>
+  }
+}

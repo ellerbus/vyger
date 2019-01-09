@@ -1,0 +1,34 @@
+{% import 'types.j2' as types -%}
+{% import 'names.j2' as names with context -%}
+@page "{% for column in table.primary_key %}{{ '{' }}{{ column.name | camel_case }}{{ '}' }}{% if not loop.last %}/{% endif %}{% endfor %}"
+@model Vyger.Web.Pages.{{ names.base_classes() }}.UpdateModel
+@{
+  ViewData["Title"] = "Update {{ names.base_class() | label_case }}";
+}
+
+<form method="post" class="col-lg-6 col-md-6 mx-auto">
+  <div asp-validation-summary="All"></div>
+  {% for column in table.columns %}
+  <div class="form-group">
+    <label asp-for="{{ names.base_class() }}.{{ column.name | pascal_case }}"></label>
+    <input class="form-control" asp-for="{{ names.base_class() }}.{{ column.name | pascal_case }}" />
+    <span class="form-text text-danger" asp-validation-for="{{ names.base_class() }}.{{ column.name | pascal_case }}"></span>
+  </div>
+  {% endfor %}
+  <div class="form-group text-right">
+    <button class="btn btn-primary">Save</button>
+    <a class="btn btn-outline-secondary" asp-page="/{{ names.base_classes() }}/Index">Cancel</a>
+  </div>
+</form>
+
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a asp-page="/Index">Home</a></li>
+      <li class="breadcrumb-item"><a asp-page="/{{ names.base_classes() }}/Index">{{ names.base_classes() }}</a></li>
+      <li class="breadcrumb-item active">
+        @Model.{{ names.base_class() }}.Name
+      </li>
+    </ol>
+  </nav>
+}

@@ -1,0 +1,36 @@
+{% import 'types.j2' as types -%}
+{% import 'names.j2' as names with context -%}
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using FluentValidation;
+using {{ namespace }}.Common.Models;
+
+namespace {{ namespace }}.Common.Validators
+{
+	///	<summary>
+	///	Represents a basic validator for {{ names.base_class() }}
+	///	</summary>
+	public class {{ names.base_class() }}Validator : AbstractValidator<{{ names.base_class() }}>
+	{
+		public {{ names.base_class() }}Validator()
+		{
+			CascadeMode = CascadeMode.Continue;
+
+			{% for column in table.columns -%}
+			{%- if types.cs_type(column) == 'string' %}
+			RuleFor(x => x.{{ column.name | pascal_case }})
+                .Cascade(CascadeMode.StopOnFirstFailure)
+				.NotNull()
+				.NotEmpty()
+				.Length(0, {{ column.type.length }});
+			{% else %}
+			RuleFor(x => x.{{ column.name | pascal_case }})
+                .Cascade(CascadeMode.StopOnFirstFailure)
+				.NotEmpty();
+			{% endif %}
+			{%- endfor %}
+		}
+	}
+}

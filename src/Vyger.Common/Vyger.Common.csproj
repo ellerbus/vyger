@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="CsvMaps\**" />
+    <Compile Remove="Strategies\**" />
+    <Compile Remove="Tasks\**" />
+    <EmbeddedResource Remove="CsvMaps\**" />
+    <EmbeddedResource Remove="Strategies\**" />
+    <EmbeddedResource Remove="Tasks\**" />
+    <None Remove="CsvMaps\**" />
+    <None Remove="Strategies\**" />
+    <None Remove="Tasks\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Models\WorkoutRoutineExercise.cs" />
+    <Compile Remove="Models\WorkoutRoutineExerciseCollection.cs" />
+    <Compile Remove="Models\WorkoutRoutineSet.cs" />
+    <Compile Remove="Models\WorkoutRoutineSetCollection.cs" />
+    <Compile Remove="Repositories\StockPriceRepository.cs" />
+    <Compile Remove="Services\QuandlService.cs" />
+    <Compile Remove="Services\StockPriceService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Augment" Version="3.0.0" />
+    <PackageReference Include="Augment.Caching" Version="3.1.0" />
+    <PackageReference Include="FluentValidation" Version="8.1.2" />
+    <PackageReference Include="Google.Apis.Drive.v3" Version="1.36.1.1442" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
+</Project>

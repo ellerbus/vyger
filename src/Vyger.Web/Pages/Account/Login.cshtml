@@ -1,0 +1,25 @@
+@page "{returnUrl?}"
+@model Vyger.Web.Pages.Account.LoginModel
+@{
+  ViewData["Title"] = "Login";
+}
+
+@if (Model.LoggedOut)
+{
+  <div class="row justify-content-center">
+    <div class="col-4 text-center">
+      <p>
+        You have been successfully logged out.
+      </p>
+    </div>
+  </div>
+}
+
+<div class="row justify-content-center">
+  <div class="col-4">
+    <a class="btn btn-block icon-google" href="@Model.GoogleLoginUrl">
+      <i class="fab fa-google pr-1"></i>
+      Login Using Google
+    </a>
+  </div>
+</div>

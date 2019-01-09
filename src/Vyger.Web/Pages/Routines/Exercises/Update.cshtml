@@ -1,0 +1,72 @@
+@page "{id}"
+@model Vyger.Web.Pages.RoutineExercises.UpdateModel
+@{
+  ViewData["Title"] = "Update Routine Exercise";
+}
+
+<form method="post">
+  <div asp-validation-summary="All"></div>
+
+  <table class="table dnd-table" id="routine-exercises">
+    <thead>
+      <tr>
+        <th class="text-center update-col">Week</th>
+        <th>
+          @Model.Exercise.Name
+          <span style="font-weight: normal" class="text-muted">Workout for</span>
+          Day #@Model.SelectedDay
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var exercise in Model.Exercises)
+      {
+        <tr>
+          <td class="text-center p-1">
+            <input type="hidden" name="Exercises.Index" value="@exercise.Week" />
+            <input type="hidden" name="Exercises[@exercise.Week].Id" value="@exercise.Id" />
+            <input type="hidden" name="Exercises[@exercise.Week].Week" value="@exercise.Week" />
+            <input type="hidden" name="Exercises[@exercise.Week].Day" value="@exercise.Day" />
+            #@exercise.Week
+          </td>
+          <td class="p-1">
+            <input class="form-control" name="Exercises[@exercise.Week].WorkoutPattern" value="@exercise.WorkoutPattern" />
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <div class="form-group text-right">
+    <button class="btn btn-primary">Save</button>
+    <a class="btn btn-outline-secondary"
+       asp-page="/Routines/Exercises/Index"
+       asp-route-id="@Model.Routine.Id"
+       asp-route-day="@Model.SelectedDay">
+      Cancel
+    </a>
+  </div>
+</form>
+
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a asp-page="/Index">Home</a></li>
+      <li class="breadcrumb-item">
+        <a asp-page="/Routines/Update" asp-route-id="@Model.Routine.Id">
+          @Model.Routine.Name
+        </a>
+      </li>
+      <li class="breadcrumb-item">
+        <a asp-page="/Routines/Exercises/Index" asp-route-id="@Model.Routine.Id">
+          Exercises
+        </a>
+      </li>
+      <li class="breadcrumb-item active">
+        @Model.Exercise.Name
+        <i class="fa fa-fw fa-filter text-muted"></i>
+        <span>Day=</span>@Model.SelectedDay
+      </li>
+    </ol>
+  </nav>
+}

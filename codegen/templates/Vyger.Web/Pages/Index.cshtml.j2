@@ -1,0 +1,48 @@
+{% import 'types.j2' as types -%}
+{% import 'names.j2' as names with context -%}
+@page
+@model Vyger.Web.Pages.{{ names.base_classes() }}.IndexModel
+@{
+  ViewData["Title"] = "{{ names.base_classes() | label_case }}";
+}
+
+<table class="table">
+  <thead>
+    <tr>
+      {% for column in table.columns -%}
+      <th>{{ column.name | label_case }}</th>
+      {% endfor %}
+      <th>
+        <a class="btn btn-outline-success float-right" asp-page="/{{ names.base_classes() }}/Create">
+          Create
+        </a>
+      </th>
+    </tr>
+  </thead>
+  @foreach (var {{ names.var_name() }} in Model.{{ names.base_classes() }})
+  {
+  <tr>
+      {% for column in table.columns -%}
+      <td>
+        @{{ names.var_name() }}.{{ column.name | pascal_case }}
+      </td>
+      {% endfor %}
+      <td class="create-col">
+        <a class="btn btn-outline-secondary float-right" asp-page="/{{ names.base_classes() }}/Update">
+          Update
+        </a>
+      </td>
+  </tr>
+  }
+</table>
+
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a asp-page="/Index">Home</a></li>
+      <li class="breadcrumb-item active">
+        {{ names.base_classes() | plural }}
+      </li>
+    </ol>
+  </nav>
+}

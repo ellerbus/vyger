@@ -1,0 +1,56 @@
+{% import 'types.j2' as types -%}
+{% import 'names.j2' as names with context -%}
+using System;
+using FluentBuilders.Core;
+using {{ namespace }}.Common.Models;
+
+namespace {{ namespace }}.Tests
+{
+    ///	<summary>
+    ///
+    ///	</summary>
+    public class {{ names.base_class() }}Builder : Builder<{{ names.base_class() }}>
+    {
+        #region Methods
+
+        public static implicit operator {{ names.base_class() }}({{ names.base_class() }}Builder builder)
+        {
+            return builder.Create();
+        }
+
+        public {{ names.base_class() }}Collection CreateCollection(int count = 5)
+        {
+            {{ names.base_class() }}Collection collection = new {{ names.base_class() }}Collection(CreateMany(count));
+            
+            return collection;
+        }
+
+        public override {{ names.base_class() }} Create(int seed = 1)
+        {
+            return base.Create(seed);
+        }
+
+        protected override {{ names.base_class() }} Build(int seed)
+        {
+            {{ names.base_class() }} {{ names.var_name() }} = new {{ names.base_class() }}()
+            { {% for column in table.columns %}
+                {{ column.name | pascal_case }} = OptInFor(x => x.{{ column.name | pascal_case }}, () => {{ types.cs_test_value(column) }}){% if not loop.last %}, {% endif %}{% endfor %}
+            };
+
+            return {{ names.var_name() }};
+        }
+
+        #endregion
+
+        #region Properties
+        {% for column in table.columns %}
+        //public {{ names.base_class() }}Builder With{{ column.name | pascal_case }}({{ types.cs_type(column) }} {{ column.name | camel_case }})
+        //{
+        //    OptInWith(x => x.{{ column.name | pascal_case }}, {{ column.name | camel_case }});
+        //
+        //    return this;
+        //}
+        {% endfor %}
+        #endregion
+    }
+}
