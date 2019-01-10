@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using Augment;
 
 namespace Vyger.Common.Models
@@ -50,19 +52,19 @@ namespace Vyger.Common.Models
         //    return this.Where(x => x.Day == day && x.Id.IsSameAs(id));
         //}
 
-        ///// <summary>
-        /////
-        ///// </summary>
-        ///// <param name="week">1-9</param>
-        ///// <param name="day">1-7</param>
-        ///// <returns></returns>
-        //public IEnumerable<CycleExercise> Filter(int week, int day)
-        //{
-        //    return this
-        //        .Where(x => x.Week == week && x.Day == day)
-        //        .OrderBy(x => x.Sequence)
-        //        .ThenBy(x => x.Name);
-        //}
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="week">1-9</param>
+        /// <param name="day">1-7</param>
+        /// <returns></returns>
+        public IEnumerable<CycleExercise> Filter(int week, int day)
+        {
+            return this
+                .Where(x => x.Week == week && x.Day == day)
+                .OrderBy(x => x.Sequence)
+                .ThenBy(x => x.Name);
+        }
 
         #endregion
     }

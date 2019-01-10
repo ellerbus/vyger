@@ -1,0 +1,66 @@
+@page "{id}"
+@using Augment
+@model Vyger.Web.Pages.CycleExercises.IndexModel
+@{
+  ViewData["Title"] = "Cycle Exercises";
+}
+
+<partial name="Weeks" model="@Model" />
+<partial name="Days" model="@Model" />
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Exercise</th>
+      <th>Workout</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var exercise in Model.Exercises)
+    {
+      <tr id="@(exercise.Id)">
+        <td>
+          <a class="pointer float-right"
+             asp-page="/Cycles/Exercises/Delete"
+             asp-route-id="@Model.Cycle.Id"
+             asp-route-day="@Model.SelectedDay"
+             asp-route-exercise="@exercise.Id">
+            <span class="fa fa-fw fa-times text-danger"></span>
+          </a>
+          @exercise.DisplayName
+        </td>
+        <td>
+          @exercise.Sets.Join(", ")
+        </td>
+        <td>
+          <a class="btn btn-outline-secondary float-right"
+             asp-page="/Cycles/Exercises/Update"
+             asp-route-id="@Model.Cycle.Id"
+             asp-route-day="@Model.SelectedDay"
+             asp-route-exercise="@exercise.Id">
+            Update
+          </a>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a asp-page="/Index">Home</a></li>
+      <li class="breadcrumb-item">
+        <a asp-page="/Cycles/Update" asp-route-id="@Model.Cycle.Id">
+          @Model.Cycle.Name
+        </a>
+      </li>
+      <li class="breadcrumb-item active">
+        Exercises
+        <i class="fa fa-fw fa-filter text-muted"></i>
+        <span>Week=</span>@Model.SelectedWeek
+        <span>Day=</span>@Model.SelectedDay
+      </li>
+    </ol>
+  </nav>
+}

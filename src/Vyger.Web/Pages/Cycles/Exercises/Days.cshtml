@@ -1,0 +1,20 @@
+﻿@model Vyger.Web.Pages.CycleExercises.IndexModel
+
+<div class="pt-2 mb-2">
+  <ul class="nav nav-pills">
+    @for (var d = 0; d < Model.Cycle.Days; d++)
+    {
+      <li class="nav-item mr-1">
+        <a class="nav-link @(d + 1 == Model.SelectedDay ? "active" : "")"
+           asp-page="/Cycles/Exercises/Index"
+           asp-route-id="@Model.Cycle.Id"
+           asp-route-week="@Model.SelectedWeek"
+           asp-route-day="@(d+1)">
+          <span class="d-none d-sm-inline">Day</span>
+          <span class="d-inline d-sm-none">D</span>
+          @(d + 1)
+        </a>
+      </li>
+    }
+  </ul>
+</div>

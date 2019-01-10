@@ -54,44 +54,28 @@ namespace Vyger.Web.Pages.CycleInputs
         {
             LoadCycle(id);
 
-            //    LogExercises = UpdateLogExercises().ToList();
+            UpdateInputs();
 
-            return new PageResult();
+            return Redirect("~/Cycles/Exercises/Index/" + Cycle.Id);
         }
 
-        //private IEnumerable<LogExercise> UpdateLogExercises()
-        //{
-        //    LogExerciseCollection all = _logs.GetLogExerciseCollection();
+        private void UpdateInputs()
+        {
+            for (int i = 0; i < Inputs.Count; i++)
+            {
+                CycleInput x = Inputs[i];
 
-        //    IList<LogExercise> logs = all
-        //        .FilterForUpdating(SelectedDate)
-        //        .ToList();
+                CycleInput input = Cycle.Inputs.GetByPrimaryKey(x.Id);
 
-        //    for (int i = 0; i < LogExercises.Count; i++)
-        //    {
-        //        LogExercise input = LogExercises[i];
+                input.Weight = x.Weight;
+                input.Reps = x.Reps;
+                input.Pullback = x.Pullback;
+            }
 
-        //        LogExercise log = logs.First(x => x.Id.IsSameAs(input.Id));
+            _cycles.UpdateCycle(Cycle);
 
-        //        log.WorkoutPattern = input.WorkoutPattern;
-
-        //        log.Sequence = (i + 1) * 100;
-
-        //        logs.Remove(log);
-
-        //        yield return log;
-        //    }
-
-        //    //  that which is left has been deleted via the UI
-        //    foreach (LogExercise log in logs)
-        //    {
-        //        all.Remove(log);
-        //    }
-
-        //    _logs.SaveLogExercises();
-
-        //    this.FlashInfo("Log Exercises Saved Successfully");
-        //}
+            this.FlashInfo("Cycle Inputs Saved Successfully");
+        }
 
         private void LoadCycle(string id)
         {

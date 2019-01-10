@@ -81,6 +81,22 @@ def create_cycle_input_table(meta):
     return t
 
 
+def create_cycle_exercise_table(meta):
+    t = Table('CycleExercise',
+              meta,
+              Column('id', String(3),
+                     primary_key=True, nullable=False),
+              Column('name', String(150), nullable=False),
+              Column('group', String(150), nullable=False),
+              Column('category', String(150), nullable=False),
+              Column('week', Integer(), nullable=False),
+              Column('day', Integer(), nullable=False),
+              Column('sequence', Integer(), nullable=False),
+              Column('sets', String(150), nullable=False),
+              Column('plan', String(150), nullable=False))
+    return t
+
+
 def create_database_engine():
     db_uri = 'sqlite://'
     engine = create_engine(db_uri)
@@ -92,6 +108,7 @@ def create_database_engine():
     create_log_exercise_table(meta)
     create_cycle_table(meta)
     create_cycle_input_table(meta)
+    create_cycle_exercise_table(meta)
 
     # Create all tables in meta
     meta.create_all()

@@ -1,0 +1,55 @@
+﻿@model Vyger.Web.Pages.CycleExercises.IndexModel
+
+<div class="d-none d-sm-block">
+  <ul class="nav nav-tabs">
+    @for (var w = 0; w < Model.Cycle.Weeks; w++)
+    {
+      <li class="nav-item">
+        <a class="nav-link @(w + 1 == Model.SelectedWeek ? "active" : "")"
+           asp-page="/Cycles/Exercises/Index"
+           asp-route-id="@Model.Cycle.Id"
+           asp-route-week="@(w+1)"
+           asp-route-day="@Model.SelectedDay">
+          Week @(w + 1)
+        </a>
+      </li>
+    }
+  </ul>
+</div>
+<div class="d-block d-sm-none">
+  <ul class="nav nav-tabs">
+    @if (Model.SelectedWeek > 1)
+    {
+      <li class="nav-item">
+        <a class="nav-link"
+           asp-page="/Cycles/Exercises/Index"
+           asp-route-id="@Model.Cycle.Id"
+           asp-route-week="@(Model.SelectedWeek - 1)"
+           asp-route-day="@Model.SelectedDay">
+          <span class="fa fa-fw fa-angle-left"></span>
+        </a>
+      </li>
+    }
+    <li class="nav-item">
+      <a class="nav-link active"
+         asp-page="/Cycles/Exercises/Index"
+         asp-route-id="@Model.Cycle.Id"
+         asp-route-week="@Model.SelectedWeek"
+         asp-route-day="@Model.SelectedDay">
+        Week @Model.SelectedWeek
+      </a>
+    </li>
+    @if (Model.SelectedWeek < Model.Cycle.Weeks)
+    {
+      <li class="nav-item">
+        <a class="nav-link"
+           asp-page="/Cycles/Exercises/Index"
+           asp-route-id="@Model.Cycle.Id"
+           asp-route-week="@(Model.SelectedWeek + 1)"
+           asp-route-day="@Model.SelectedDay">
+          <span class="fa fa-fw fa-angle-right"></span>
+        </a>
+      </li>
+    }
+  </ul>
+</div>
