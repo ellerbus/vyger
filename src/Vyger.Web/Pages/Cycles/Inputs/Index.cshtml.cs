@@ -1,0 +1,156 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Vyger.Common.Models;
+using Vyger.Common.Services;
+
+namespace Vyger.Web.Pages.CycleInputs
+{
+    [Authorize]
+    public class IndexModel : PageModel
+    {
+        #region Members
+
+        private ILogExerciseService _logs;
+        private ICycleService _cycles;
+
+        #endregion
+
+        #region Constructors
+
+        public IndexModel(
+            ILogExerciseService logs,
+            ICycleService cycles)
+        {
+            _logs = logs;
+            _cycles = cycles;
+        }
+
+        #endregion
+
+        #region Methods
+
+        public IActionResult OnGet(string id)
+        {
+            LoadCycle(id);
+
+            if (Cycle == null)
+            {
+                this.FlashWarning($"Could not find requested Cycle");
+
+                return Redirect("~/Cycles/Index");
+            }
+
+            LoadInputs();
+
+            return new PageResult();
+        }
+
+        public IActionResult OnPost(string id)
+        {
+            LoadCycle(id);
+
+            //    LogExercises = UpdateLogExercises().ToList();
+
+            return new PageResult();
+        }
+
+        //private IEnumerable<LogExercise> UpdateLogExercises()
+        //{
+        //    LogExerciseCollection all = _logs.GetLogExerciseCollection();
+
+        //    IList<LogExercise> logs = all
+        //        .FilterForUpdating(SelectedDate)
+        //        .ToList();
+
+        //    for (int i = 0; i < LogExercises.Count; i++)
+        //    {
+        //        LogExercise input = LogExercises[i];
+
+        //        LogExercise log = logs.First(x => x.Id.IsSameAs(input.Id));
+
+        //        log.WorkoutPattern = input.WorkoutPattern;
+
+        //        log.Sequence = (i + 1) * 100;
+
+        //        logs.Remove(log);
+
+        //        yield return log;
+        //    }
+
+        //    //  that which is left has been deleted via the UI
+        //    foreach (LogExercise log in logs)
+        //    {
+        //        all.Remove(log);
+        //    }
+
+        //    _logs.SaveLogExercises();
+
+        //    this.FlashInfo("Log Exercises Saved Successfully");
+        //}
+
+        private void LoadCycle(string id)
+        {
+            Cycle = _cycles.GetCycle(id);
+        }
+
+        private void LoadInputs()
+        {
+            Inputs = Cycle.Inputs
+                .Where(x => x.RequiresInput)
+                .OrderBy(x => x.DisplayName)
+                .ToList();
+
+            var all = _logs.GetLogExerciseCollection();
+
+            //  do we need to lookup stuff
+            foreach (var input in Inputs.Where(x => x.OneRepMax == 0))
+            {
+                var log = all.FilterMax(input.Id);
+
+                //  find the max
+                double orm = log.OneRepMax;
+
+                WorkoutSet set = log.Sets
+                    .Select(x => new WorkoutSet(x))
+                    .First(x => x.OneRepMax == orm);
+
+                input.Weight = (int)set.Weight;
+                input.Reps = set.Reps;
+
+                TimeSpan time = DateTime.Now.Date - log.Date;
+
+                if (time.TotalDays > 90)
+                {
+                    input.Pullback = 10;
+                }
+            }
+        }
+
+        public IEnumerable<SelectListItem> GetRepsSelectList(int reps)
+        {
+            return WebConstants.GetRepsSelectListItems(reps);
+        }
+
+        public IEnumerable<SelectListItem> GetPullbackSelectList(int pullback)
+        {
+            return WebConstants.GetPullbackSelectListItems(pullback);
+        }
+
+        #endregion
+
+        #region Properties
+
+        [BindProperty]
+        public Cycle Cycle { get; set; }
+
+        [BindProperty]
+        public IList<CycleInput> Inputs { get; set; }
+
+        #endregion
+    }
+}

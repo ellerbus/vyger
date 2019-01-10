@@ -32,26 +32,22 @@ namespace Vyger.Common.Models
 
         #region Methods
 
-        public static string Combine(string[] sets)
+        public static string Combine(string[] sets, bool collapseRepeats)
         {
-            return sets.Select(x => Format(x)).Join(", ");
+            if (sets == null)
+            {
+                return "";
+            }
+
+            return sets.SelectMany(x => new WorkoutSet(x).Format(collapseRepeats)).Join(", ");
         }
 
-        public static string[] Expand(string workoutPattern)
+        public static string[] Expand(string workoutPattern, bool collapseRepeats)
         {
             return workoutPattern
                 .Split(new[] { ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(x => Format(x))
+                .SelectMany(x => new WorkoutSet(x).Format(collapseRepeats))
                 .ToArray();
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
-        public static string Format(string pattern)
-        {
-            return new WorkoutSet(pattern).Display;
         }
 
         private void Parse(string set)
@@ -170,6 +166,67 @@ namespace Vyger.Common.Models
             }
         }
 
+        public IEnumerable<string> Format(bool collapseRepeats)
+        {
+            List<string> patterns = new List<string>();
+
+            switch (Type)
+            {
+                case WorkoutSetTypes.BodyWeight:
+                    patterns.Add("BW");
+                    break;
+
+                case WorkoutSetTypes.Static:
+                    patterns.Add($"{Weight:0}");
+                    break;
+
+                case WorkoutSetTypes.RepMax:
+                    patterns.Add($"{RepMax:0}RM");
+                    break;
+
+                case WorkoutSetTypes.Reference:
+                    patterns.Add("=" + Reference);
+                    break;
+            }
+
+            switch (Type)
+            {
+                case WorkoutSetTypes.RepMax:
+                case WorkoutSetTypes.Reference:
+                    if (Percent > 0)
+                    {
+                        string p = $"{Percent:0.00}".Replace(".00", "");
+
+                        if (p != "100")
+                        {
+                            patterns.Add($"*{p}%");
+                        }
+                    }
+                    break;
+            }
+
+            patterns.Add("x" + Reps);
+
+            if (collapseRepeats)
+            {
+                if (Repeat > 1)
+                {
+                    patterns.Add("x" + Repeat);
+                }
+
+                yield return patterns.Join("");
+            }
+            else
+            {
+                string temp = patterns.Join("");
+
+                for (int i = 0; i < Repeat; i++)
+                {
+                    yield return temp;
+                }
+            }
+        }
+
         #endregion
 
         #region Properties
@@ -209,60 +266,19 @@ namespace Vyger.Common.Models
         /// </summary>
         public int Repeat { get; set; }
 
-        public string Display
+        /// <summary>
+        ///
+        /// </summary>
+        public double OneRepMax
         {
             get
             {
-                List<string> patterns = new List<string>();
-
-                switch (Type)
+                if (Type == WorkoutSetTypes.Static)
                 {
-                    case WorkoutSetTypes.BodyWeight:
-                        patterns.Add("BW");
-                        break;
-
-                    case WorkoutSetTypes.Static:
-                        patterns.Add($"{Weight:0}");
-                        break;
-
-                    case WorkoutSetTypes.RepMax:
-                        patterns.Add($"{RepMax:0}RM");
-                        break;
-
-                    case WorkoutSetTypes.Reference:
-                        patterns.Add("=" + Reference);
-                        break;
+                    return WorkoutCalculator.OneRepMax(Weight, Reps);
                 }
 
-                switch (Type)
-                {
-                    case WorkoutSetTypes.RepMax:
-                    case WorkoutSetTypes.Reference:
-                        if (Percent > 0)
-                        {
-                            string p = $"{Percent:0.00}".Replace(".00", "");
-
-                            if (p != "100")
-                            {
-                                patterns.Add($"*{p}%");
-                            }
-                        }
-                        break;
-                }
-
-                patterns.Add("x" + Reps);
-
-                if (Repeat > 1)
-                {
-                    patterns.Add("x" + Repeat);
-                }
-
-                return patterns.Join("");
-            }
-
-            set
-            {
-                Parse(value);
+                return 0;
             }
         }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -10,12 +11,23 @@ namespace Vyger.Common.Models
     ///
     ///	</summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class RoutineExerciseCollection : Collection<RoutineExercise>
+    public class LogExerciseCollection : Collection<LogExercise>
     {
         #region Constructors
 
-        public RoutineExerciseCollection()
+        public LogExerciseCollection()
         {
+        }
+
+        public LogExerciseCollection(IEnumerable<LogExercise> exercises)
+        {
+            if (exercises != null)
+            {
+                foreach (LogExercise exercise in exercises)
+                {
+                    Add(exercise);
+                }
+            }
         }
 
         #endregion
@@ -38,18 +50,28 @@ namespace Vyger.Common.Models
         ///
         /// </summary>
         /// <returns></returns>
-        public RoutineExercise FilterForUpdate(RoutineExercise search)
+        public LogExercise FilterMax(string id)
         {
-            return FilterForUpdating(search.Day, search.Id).First(x => x.Week == search.Week);
+            LogExercise max = null;
+
+            foreach (LogExercise log in this.Where(x => x.Id.IsSameAs(id)))
+            {
+                if (max == null || log.OneRepMax > max.OneRepMax)
+                {
+                    max = log;
+                }
+            }
+
+            return max;
         }
 
         /// <summary>
         ///
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<RoutineExercise> FilterForUpdating(int day, string id)
+        public IEnumerable<LogExercise> FilterForUpdating(DateTime date)
         {
-            return this.Where(x => x.Day == day && x.Id.IsSameAs(id));
+            return this.Where(x => x.Date == date);
         }
 
         /// <summary>
@@ -58,10 +80,10 @@ namespace Vyger.Common.Models
         /// <param name="week">1-9</param>
         /// <param name="day">1-7</param>
         /// <returns></returns>
-        public IEnumerable<RoutineExercise> Filter(int week, int day)
+        public IEnumerable<LogExercise> FilterDateRange(DateTime start, DateTime end)
         {
             return this
-                .Where(x => x.Week == week && x.Day == day)
+                .Where(x => x.Date.IsBetween(start, end))
                 .OrderBy(x => x.Sequence)
                 .ThenBy(x => x.Name);
         }

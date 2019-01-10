@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace Vyger.Common.Models
@@ -7,23 +8,26 @@ namespace Vyger.Common.Models
     ///
     ///	</summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class RoutineExercise : Exercise
+    public class CycleExercise : Exercise
     {
         #region Constructors
 
-        public RoutineExercise()
+        public CycleExercise()
         {
         }
 
-        public RoutineExercise(int week, int day, Exercise primary)
+        public CycleExercise(RoutineExercise primary)
         {
-            Week = week;
-            Day = day;
-
             Id = primary.Id;
             Group = primary.Group;
             Category = primary.Category;
             Name = primary.Name;
+
+            Week = primary.Week;
+            Day = primary.Day;
+
+            Sets = primary.Sets.ToArray();
+            Plan = primary.Sets.ToArray();
         }
 
         #endregion
@@ -46,7 +50,7 @@ namespace Vyger.Common.Models
 
                 string nm = $"[{Name}]";
 
-                return $"RoutineExericse, id={id}, nm={nm}";
+                return $"CycleExericse, id={id}, nm={nm}";
             }
         }
 
@@ -81,11 +85,17 @@ namespace Vyger.Common.Models
         ///	<summary>
         ///
         ///	</summary>
+        [JsonProperty("plan")]
+        public string[] Plan { get; set; }
+
+        ///	<summary>
+        ///
+        ///	</summary>
         [JsonIgnore()]
         public string WorkoutPattern
         {
-            get { return WorkoutSet.Combine(Sets, true); }
-            set { Sets = WorkoutSet.Expand(value, true); }
+            get { return WorkoutSet.Combine(Plan, true); }
+            set { Plan = WorkoutSet.Expand(value, true); }
         }
 
         #endregion

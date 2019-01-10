@@ -40,6 +40,19 @@ def create_routine_exercise_table(meta):
     return t
 
 
+def create_log_exercise_table(meta):
+    t = Table('LogExercise',
+              meta,
+              Column('id', String(3),
+                     primary_key=True, nullable=False),
+              Column('name', String(150), nullable=False),
+              Column('group', String(150), nullable=False),
+              Column('category', String(150), nullable=False),
+              Column('date', String(10), nullable=False),
+              Column('sets', String(150), nullable=False))
+    return t
+
+
 def create_cycle_table(meta):
     t = Table('Cycle',
               meta,
@@ -53,6 +66,21 @@ def create_cycle_table(meta):
     return t
 
 
+def create_cycle_input_table(meta):
+    t = Table('CycleInput',
+              meta,
+              Column('id', String(3),
+                     primary_key=True, nullable=False),
+              Column('name', String(150), nullable=False),
+              Column('group', String(150), nullable=False),
+              Column('category', String(150), nullable=False),
+              Column('weight', Float(), nullable=False),
+              Column('reps', Integer(), nullable=False),
+              Column('pullback', Integer(), nullable=False),
+              Column('requires_input', Boolean(), nullable=False))
+    return t
+
+
 def create_database_engine():
     db_uri = 'sqlite://'
     engine = create_engine(db_uri)
@@ -61,7 +89,9 @@ def create_database_engine():
     create_exercise_table(meta)
     create_routine_table(meta)
     create_routine_exercise_table(meta)
+    create_log_exercise_table(meta)
     create_cycle_table(meta)
+    create_cycle_input_table(meta)
 
     # Create all tables in meta
     meta.create_all()

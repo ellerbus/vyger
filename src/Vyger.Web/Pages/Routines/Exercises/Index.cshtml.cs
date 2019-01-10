@@ -44,13 +44,6 @@ namespace Vyger.Web.Pages.RoutineExercises
             return new PageResult();
         }
 
-        //public IActionResult OnPost(string id, int week = 1, int day = 1)
-        //{
-        //    LoadRoutine(id, week, day);
-
-        //    return new PageResult();
-        //}
-
         public IActionResult OnPostSortExercises(string id, int week = 1, int day = 1)
         {
             LoadRoutine(id, week, day);

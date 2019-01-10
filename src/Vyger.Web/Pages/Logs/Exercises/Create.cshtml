@@ -1,0 +1,84 @@
+@page
+@using Vyger.Common
+@model Vyger.Web.Pages.LogExercises.CreateModel
+@{
+  ViewData["Title"] = "Create Log Exercise";
+}
+
+<form method="post" class="col-lg-6 col-md-6 mx-auto">
+
+  <div class="form-group">
+    <select class="form-control" asp-for="LogExercise.Id">
+      <option value="">(select exercise)</option>
+      @foreach (var exercise in Model.Exercises)
+      {
+        <option value="@exercise.Id"
+                data-group="@exercise.Group"
+                data-category="@exercise.Category">
+          @exercise.DisplayName
+        </option>
+      }
+    </select>
+    <span class="form-text text-danger" asp-validation-for="LogExercise.Id"></span>
+  </div>
+
+  <div class="form-group">
+    <label asp-for="LogExercise.WorkoutPattern"></label>
+    <input class="form-control" asp-for="LogExercise.WorkoutPattern" />
+    <span class="form-text text-danger" asp-validation-for="LogExercise.WorkoutPattern"></span>
+  </div>
+
+  <div class="form-group text-right">
+    <button class="btn btn-primary">Save</button>
+    <a class="btn btn-outline-secondary" asp-page="/LogExercises/Index">Cancel</a>
+  </div>
+</form>
+
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a asp-page="/Index">Home</a></li>
+      <li class="breadcrumb-item"><a asp-page="/Logs/Index">Logs @DateTime.Now.ToString("MMM yyyy")</a></li>
+      <li class="breadcrumb-item">
+        <a asp-page="/Logs/Exercises/Index"
+           asp-route-date="@Model.SelectedDate.ToYMD()">
+          @Model.SelectedDate.ToString("dddd MMM d")
+        </a>
+      </li>
+      <li class="breadcrumb-item active">
+        Create
+      </li>
+    </ol>
+  </nav>
+}
+
+@section Scripts {
+  <script type="text/javascript">
+    function loadWorkout(data)
+    {
+      $('input[name="LogExercise.WorkoutPattern"]').val(data);
+    }
+
+    $(function ()
+    {
+      $('select[name="LogExercise.Id"]').change(function ()
+      {
+        var id = $(this).find('option:selected').val();
+
+        var url = '@Url.Page("/Logs/Exercises/Create", "LastWorkout")'
+
+        url += "&date=@Model.SelectedDate.ToYMD()";
+
+        url += "&id=" + id;
+
+        var options = {
+          url: url,
+          dataType: 'json',
+          success:loadWorkout
+        };
+
+        $.ajax(options);
+      });
+    });
+  </script>
+}

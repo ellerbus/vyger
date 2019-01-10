@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Newtonsoft.Json;
 
 namespace Vyger.Common.Models
@@ -7,23 +7,22 @@ namespace Vyger.Common.Models
     ///
     ///	</summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class RoutineExercise : Exercise
+    public class CycleInput : Exercise
     {
         #region Constructors
 
-        public RoutineExercise()
+        public CycleInput()
         {
         }
 
-        public RoutineExercise(int week, int day, Exercise primary)
+        public CycleInput(Exercise primary)
         {
-            Week = week;
-            Day = day;
-
             Id = primary.Id;
             Group = primary.Group;
             Category = primary.Category;
             Name = primary.Name;
+
+            Reps = 1;
         }
 
         #endregion
@@ -42,11 +41,11 @@ namespace Vyger.Common.Models
         {
             get
             {
-                string id = $"[{Week}, {Day}, {Id}]";
+                string id = $"[{Id}]";
 
                 string nm = $"[{Name}]";
 
-                return $"RoutineExericse, id={id}, nm={nm}";
+                return $"CycleInput, id={id}, nm={nm}";
             }
         }
 
@@ -57,35 +56,37 @@ namespace Vyger.Common.Models
         ///	<summary>
         ///
         ///	</summary>
-        [JsonProperty("week")]
-        public int Week { get; set; }
+        [JsonProperty("weight")]
+        public int Weight { get; set; }
 
         ///	<summary>
         ///
         ///	</summary>
-        [JsonProperty("day")]
-        public int Day { get; set; }
+        [JsonProperty("reps")]
+        public int Reps { get; set; }
 
         ///	<summary>
         ///
         ///	</summary>
-        [JsonProperty("sequence")]
-        public int Sequence { get; set; }
+        [JsonProperty("pullback")]
+        public int Pullback { get; set; }
 
         ///	<summary>
         ///
         ///	</summary>
-        [JsonProperty("sets")]
-        public string[] Sets { get; set; }
+        [JsonProperty("requiresInput")]
+        public bool RequiresInput { get; set; }
 
         ///	<summary>
         ///
         ///	</summary>
         [JsonIgnore()]
-        public string WorkoutPattern
+        public double OneRepMax
         {
-            get { return WorkoutSet.Combine(Sets, true); }
-            set { Sets = WorkoutSet.Expand(value, true); }
+            get
+            {
+                return WorkoutCalculator.OneRepMax(Weight, Reps);
+            }
         }
 
         #endregion

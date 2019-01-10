@@ -1,4 +1,6 @@
+using System;
 using System.Diagnostics;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace Vyger.Common.Models
@@ -7,18 +9,17 @@ namespace Vyger.Common.Models
     ///
     ///	</summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-    public class RoutineExercise : Exercise
+    public class LogExercise : Exercise
     {
         #region Constructors
 
-        public RoutineExercise()
+        public LogExercise()
         {
         }
 
-        public RoutineExercise(int week, int day, Exercise primary)
+        public LogExercise(DateTime date, Exercise primary)
         {
-            Week = week;
-            Day = day;
+            Date = date;
 
             Id = primary.Id;
             Group = primary.Group;
@@ -42,11 +43,11 @@ namespace Vyger.Common.Models
         {
             get
             {
-                string id = $"[{Week}, {Day}, {Id}]";
+                string id = $"[{Date:yyyy-MM-dd}]";
 
                 string nm = $"[{Name}]";
 
-                return $"RoutineExericse, id={id}, nm={nm}";
+                return $"LogExercise, id={id}, nm={nm}";
             }
         }
 
@@ -57,14 +58,9 @@ namespace Vyger.Common.Models
         ///	<summary>
         ///
         ///	</summary>
-        [JsonProperty("week")]
-        public int Week { get; set; }
-
-        ///	<summary>
-        ///
-        ///	</summary>
-        [JsonProperty("day")]
-        public int Day { get; set; }
+        [JsonProperty("ymd")]
+        [JsonConverter(typeof(YmdDateConverter))]
+        public DateTime Date { get; set; }
 
         ///	<summary>
         ///
@@ -81,11 +77,34 @@ namespace Vyger.Common.Models
         ///	<summary>
         ///
         ///	</summary>
+        [JsonProperty("evaluation")]
+        public LogCycleEvaluation Evaluation { get; set; }
+
+        ///	<summary>
+        ///
+        ///	</summary>
+        [JsonIgnore()]
+        public double OneRepMax
+        {
+            get
+            {
+                if (Sets != null && Sets.Length > 0)
+                {
+                    return Sets.Select(x => new WorkoutSet(x).OneRepMax).Max();
+                }
+
+                return 0;
+            }
+        }
+
+        ///	<summary>
+        ///
+        ///	</summary>
         [JsonIgnore()]
         public string WorkoutPattern
         {
-            get { return WorkoutSet.Combine(Sets, true); }
-            set { Sets = WorkoutSet.Expand(value, true); }
+            get { return WorkoutSet.Combine(Sets, false); }
+            set { Sets = WorkoutSet.Expand(value, false); }
         }
 
         #endregion

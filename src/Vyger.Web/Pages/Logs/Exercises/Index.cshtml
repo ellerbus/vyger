@@ -1,0 +1,109 @@
+@page
+@using Augment
+@using Vyger.Common
+@model Vyger.Web.Pages.LogExercises.IndexModel
+@{
+  ViewData["Title"] = "Log Exercises";
+}
+
+<form method="post">
+  <div asp-validation-summary="All"></div>
+
+  <table class="table dnd-table" id="routine-exercises">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Exercise</th>
+        <th style="width: 600px">Workout</th>
+        <th class="create-col">
+          <a class="btn btn-outline-success float-right"
+             asp-page="/Logs/Exercises/Create"
+             asp-route-date="@Model.SelectedDate">
+            Add
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var exercise in Model.LogExercises)
+      {
+        <tr id="@(exercise.Id)">
+          <td class="drag-handler"></td>
+          <td>
+            <a class="pointer float-right remove-log">
+              <span class="fa fa-fw fa-times text-danger"></span>
+            </a>
+            <input type="hidden" name="LogExercises.Index" value="@exercise.Id" />
+            <input type="hidden" name="LogExercises[@exercise.Id].Id" value="@exercise.Id" />
+            @exercise.DisplayName
+          </td>
+          <td class="p-1" colspan="2">
+            <input class="form-control" name="LogExercises[@exercise.Id].WorkoutPattern" value="@exercise.WorkoutPattern" />
+          </td>
+        </tr>
+      }
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="4" class="text-right">
+          <button class="btn btn-primary">Save</button>
+          <a class="btn btn-outline-secondary" asp-page="/Logs/Index">Cancel</a>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</form>
+
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a asp-page="/Index">Home</a></li>
+      <li class="breadcrumb-item"><a asp-page="/Logs/Index">Logs @DateTime.Now.ToString("MMM yyyy")</a></li>
+      <li class="breadcrumb-item active">
+        @Model.SelectedDate.ToString("dddd MMM d")
+      </li>
+    </ol>
+  </nav>
+}
+@section Scripts {
+  <script src="//cdnjs.cloudflare.com/ajax/libs/TableDnD/1.0.3/jquery.tablednd.min.js"></script>
+  <script type="text/javascript">
+    function getExercises()
+    {
+      var ids = [];
+
+      $('#routine-exercises tbody tr').each(function (idx, el)
+      {
+        ids.push($(this).attr('id'));
+      });
+
+      return ids;
+    }
+
+    function submitForm()
+    {
+      var ids = getExercises();
+
+      $('input[name=ids]').val(ids);
+
+      $('#sort-exercises').submit();
+    }
+
+    $(function ()
+    {
+      var options = {
+        dragHandle: '.drag-handler',
+        onDragClass: 'drag-class'
+      };
+
+      $('table.dnd-table').tableDnD(options);
+
+      $('div.alert').fadeOut(3000);
+
+      $('a.remove-log').click(function ()
+      {
+        $(this).closest('tr').fadeOut('fast', function () { $(this).remove() });
+      });
+    });
+  </script>
+}

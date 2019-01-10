@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Linq;
 using Augment;
 using Newtonsoft.Json;
 
@@ -16,6 +17,41 @@ namespace Vyger.Common.Models
         public Cycle()
         {
             Id = Generators.CycleId();
+
+            Inputs = new CycleInputCollection();
+
+            Exercises = new CycleExerciseCollection();
+        }
+
+        public Cycle(Routine primary) : this()
+        {
+            Name = primary.Name;
+            Weeks = primary.Weeks;
+            Days = primary.Days;
+
+            foreach (RoutineExercise exercise in primary.Exercises)
+            {
+                Exercises.Add(new CycleExercise(exercise));
+
+                CycleInput input = null;
+
+                if (!Inputs.TryGetByPrimaryKey(exercise.Id, out input))
+                {
+                    input = new CycleInput(exercise);
+
+                    Inputs.Add(input);
+                }
+
+                bool requiresInput = exercise.Sets
+                    .Select(x => new WorkoutSet(x))
+                    .Where(x => x.Type == WorkoutSetTypes.RepMax)
+                    .Any();
+
+                if (requiresInput)
+                {
+                    input.RequiresInput = true;
+                }
+            }
         }
 
         #endregion
@@ -86,6 +122,18 @@ namespace Vyger.Common.Models
         [Display(Name = "Logged", Prompt = "Logged")]
         [JsonProperty("lastLogged")]
         public string LastLogged { get; set; }
+
+        ///	<summary>
+        /// week:day
+        ///	</summary>
+        [JsonProperty("inputs")]
+        public CycleInputCollection Inputs { get; set; }
+
+        ///	<summary>
+        /// week:day
+        ///	</summary>
+        [JsonProperty("exercises")]
+        public CycleExerciseCollection Exercises { get; set; }
 
         #endregion
     }

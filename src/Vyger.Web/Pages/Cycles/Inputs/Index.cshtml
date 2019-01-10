@@ -1,0 +1,59 @@
+@page "{id}"
+@model Vyger.Web.Pages.CycleInputs.IndexModel
+@{
+  ViewData["Title"] = "Cycle Inputs";
+}
+
+<form method="post">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Exercise</th>
+        <th class="select-col">Weight</th>
+        <th class="select-col">Reps</th>
+        <th class="select-col">Pullback</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var input in Model.Inputs)
+      {
+        <tr>
+          <td>
+            <input type="hidden" name="Inputs.Index" value="@input.Id" />
+            <input type="hidden" name="Inputs[@input.Id].Id" value="@input.Id" />
+            @input.DisplayName
+          </td>
+          <td class="p-1">
+            <input class="form-control" name="Inputs[@input.Id].Weight" value="@input.Weight" />
+          </td>
+          <td class="p-1">
+            <select class="form-control" name="Inputs[@input.Id].Reps" asp-items="@Model.GetRepsSelectList(input.Reps)"></select>
+          </td>
+          <td class="p-1">
+            <select class="form-control" name="Inputs[@input.Id].Pullback" asp-items="@Model.GetPullbackSelectList(input.Pullback)"></select>
+          </td>
+        </tr>
+      }
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="4" class="text-right">
+          <button class="btn btn-primary">Save</button>
+          <a class="btn btn-outline-secondary" asp-page="/Cycles/Index">Cancel</a>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</form>
+
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a asp-page="/Index">Home</a></li>
+      <li class="breadcrumb-item"><a asp-page="/Cycles/Index">Cycles</a></li>
+      <li class="breadcrumb-item active">
+        Inputs - @Model.Cycle.Name
+      </li>
+    </ol>
+  </nav>
+}

@@ -70,11 +70,11 @@ namespace Vyger.Web.Pages.RoutineExercises
                 return new PageResult();
             }
 
-            Exercise master = _exercises.GetExercise(Exercise.Id);
+            Exercise primary = _exercises.GetExercise(Exercise.Id);
 
             for (int week = 1; week <= Routine.Weeks; week++)
             {
-                RoutineExercise exercise = new RoutineExercise(week, day, master);
+                RoutineExercise exercise = new RoutineExercise(week, day, primary);
 
                 exercise.Sets = Exercise.Sets.ToArray();
 

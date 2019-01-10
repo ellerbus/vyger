@@ -43,7 +43,7 @@ namespace Vyger.Common.Validators
             {
                 context.Sets = arg
                     .Where(x => x.IsNotEmpty())
-                    .Select(x => WorkoutSet.Format(x))
+                    .SelectMany(x => new WorkoutSet(x).Format(true))
                     .ToArray();
             }
 

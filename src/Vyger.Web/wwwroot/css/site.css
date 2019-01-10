@@ -42,6 +42,13 @@ table td.update-col {
     width: 100px;
 }
 
+table th.select-col,
+table td.select-col,
+table th.select-col,
+table td.select-col {
+    width: 125px;
+}
+
 a.icon-google {
     margin-right: 10px;
     background: #dc4b38 none repeat scroll 0 0;

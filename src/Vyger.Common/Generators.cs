@@ -56,7 +56,7 @@ namespace Vyger.Common
                     chars[i] = _alphabet[data[i] % (_alphabet.Length - 1)];
                 }
 
-                return new string(chars);
+                return prefix + new string(chars);
             }
         }
 

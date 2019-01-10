@@ -1,0 +1,52 @@
+@page
+@model Vyger.Web.Pages.Logs.IndexModel
+@{
+  ViewData["Title"] = "Logs";
+}
+
+<div class="row justify-content-md-center">
+  <div class="col-lg-8 col-md-10">
+    <div id="calendar"></div>
+  </div>
+</div>
+
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a asp-page="/Index">Home</a></li>
+      <li class="breadcrumb-item active">
+        Logs
+      </li>
+    </ol>
+  </nav>
+}
+
+@section Styles {
+  <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" type="text/css" />
+}
+@section Scripts {
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.0/moment.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+
+  <script type="text/javascript">
+    $(function ()
+    {
+      $('#calendar').fullCalendar({
+        themeSystem: 'bootstrap4',
+        header: {
+          left: 'prev,next',
+          center: 'title',
+          right: 'today'
+        },
+        events: '@Url.Page("/Logs/Index", "Events")',
+
+        dayClick: function (date, jsEvent, view)
+        {
+          var url = '@Url.Page("/Logs/Exercises/Index")?date=' + date.format();
+
+          window.location.href = url;
+        }
+      });
+    });
+  </script>
+}

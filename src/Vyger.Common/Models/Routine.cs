@@ -16,6 +16,8 @@ namespace Vyger.Common.Models
         public Routine()
         {
             Id = Generators.RoutineId();
+
+            Exercises = new RoutineExerciseCollection();
         }
 
         #endregion
@@ -81,40 +83,11 @@ namespace Vyger.Common.Models
         [JsonProperty("sets")]
         public string[] Sets { get; set; }
 
-        /////	<summary>
-        /////
-        /////	</summary>
-        //[Display(Name = "Default Sets", Prompt = "Default Sets")]
-        //[JsonIgnore()]
-        //public string WorkoutPattern
-        //{
-        //    get { return Sets.Select(x => WorkoutSet.Format(x)).Join(", "); }
-        //    set { Sets = WorkoutSet.ParsePatterns(value).ToArray(); }
-        //}
-
         /// <summary>
         ///
         /// </summary>
         [JsonProperty("exercises")]
         public RoutineExerciseCollection Exercises { get; set; }
-
-        ///// <summary>
-        /////
-        ///// </summary>
-        //[XmlIgnore]
-        //public ExerciseCollection AllExercises { get; set; }
-
-        ///// <summary>
-        /////
-        ///// </summary>
-        //[XmlArray("workout-routine-exercises"), XmlArrayItem("workout-routine-exercise")]
-        //public RoutineExerciseCollection RoutineExercises { get; private set; }
-
-        ///// <summary>
-        /////
-        ///// </summary>
-        //[XmlArray("workout-plans"), XmlArrayItem("workout-plan")]
-        //public PlanCollection Plans { get; private set; }
 
         #endregion
     }

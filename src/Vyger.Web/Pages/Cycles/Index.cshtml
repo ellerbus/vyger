@@ -1,0 +1,54 @@
+@page
+@model Vyger.Web.Pages.Cycles.IndexModel
+@{
+  ViewData["Title"] = "Cycles";
+}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th class="text-center" style="width: 100px;">Seq</th>
+      <th class="text-center" style="width: 100px;">Weeks</th>
+      <th class="text-center" style="width: 100px;">Logged</th>
+      <th>
+        <a class="btn btn-outline-success float-right" asp-page="/Cycles/Create">
+          Create
+        </a>
+      </th>
+    </tr>
+  </thead>
+  @foreach (var cycle in Model.Cycles)
+  {
+    <tr>
+      <td>
+        @cycle.Name
+      </td>
+      <td class="text-center">
+        @cycle.Sequence
+      </td>
+      <td class="text-center">
+        @cycle.Weeks
+      </td>
+      <td class="text-center">
+        @cycle.LastLogged
+      </td>
+      <td class="create-col">
+        <a class="btn btn-outline-secondary float-right" asp-page="/Cycles/Update">
+          View
+        </a>
+      </td>
+    </tr>
+  }
+</table>
+
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a asp-page="/Index">Home</a></li>
+      <li class="breadcrumb-item active">
+        Recent 5 Cycles
+      </li>
+    </ol>
+  </nav>
+}
