@@ -1,0 +1,42 @@
+@page
+@model Vyger.Web.Pages.Routines.CreateModel
+@{
+  ViewData["Title"] = "Create Routine";
+}
+
+<form method="post" class="col-lg-6 col-md-6 mx-auto">
+  <div asp-validation-summary="All"></div>
+
+  <div class="form-group mb-1">
+    <label asp-for="Routine.Name"></label>
+    <input class="form-control" asp-for="Routine.Name" />
+    <span class="form-text text-danger" asp-validation-for="Routine.Name"></span>
+  </div>
+
+  <div class="form-group mb-1">
+    <select class="form-control" asp-for="Routine.Weeks" asp-items="@Model.WeekSelectList"></select>
+    <span class="form-text text-danger" asp-validation-for="Routine.Weeks"></span>
+  </div>
+
+  <div class="form-group">
+    <select class="form-control" asp-for="Routine.Days" asp-items="@Model.DaySelectList"></select>
+    <span class="form-text text-danger" asp-validation-for="Routine.Days"></span>
+  </div>
+
+  <div class="form-group text-right">
+    <button class="btn btn-primary">Save</button>
+    <a class="btn btn-outline-secondary" asp-page="/Routines/Index">Cancel</a>
+  </div>
+</form>
+
+@section Breadcrumbs{
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a asp-page="/Index">Home</a></li>
+      <li class="breadcrumb-item"><a asp-page="/Routines/Index">Routines</a></li>
+      <li class="breadcrumb-item active">
+        Create
+      </li>
+    </ol>
+  </nav>
+}

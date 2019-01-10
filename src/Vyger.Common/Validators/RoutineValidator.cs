@@ -41,8 +41,6 @@ namespace Vyger.Common.Validators
         {
             if (arg != null)
             {
-                //  != null for those UI's where Routine is part of
-                //  the intrinsic validation with a bound property
                 context.Sets = arg
                     .Where(x => x.IsNotEmpty())
                     .Select(x => WorkoutSet.Format(x))

@@ -63,6 +63,8 @@ namespace Vyger.Web.Pages.RoutineExercises
             {
                 ModelState.AddModelError("Id", "Select an Exercise");
 
+                this.FlashDanger($"Validation errors were found");
+
                 LoadExercises();
 
                 return new PageResult();

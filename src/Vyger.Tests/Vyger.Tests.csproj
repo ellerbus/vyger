@@ -103,12 +103,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnyHelper.cs" />
+    <Compile Include="Builders\CycleBuilder.cs" />
     <Compile Include="Builders\ExerciseBuilder.cs" />
     <Compile Include="Builders\MemberBuilder.cs" />
     <Compile Include="Builders\RoutineBuilder.cs" />
     <Compile Include="Builders\_AllBuilders.cs" />
     <Compile Include="Common\Models\MemberModelTests.cs" />
     <Compile Include="Common\Models\WorkoutSetTests.cs" />
+    <Compile Include="Common\Services\CycleServiceTests.cs" />
     <Compile Include="Common\Services\RoutineServiceTests.cs" />
     <Compile Include="Common\Services\ExerciseServiceTests.cs" />
     <Compile Include="Common\Services\_BaseServiceTests.cs" />

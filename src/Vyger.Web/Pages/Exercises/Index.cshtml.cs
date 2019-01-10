@@ -36,9 +36,7 @@ namespace Vyger.Web.Pages.Exercises
             Exercises = _exercises
                 .GetExerciseCollection()
                 .Filter(group, category)
-                .OrderBy(x => x.Group)
-                .ThenBy(x => x.Category)
-                .ThenBy(x => x.Name);
+                .OrderBy(x => x.DisplayName);
         }
 
         #endregion

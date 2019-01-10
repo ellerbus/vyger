@@ -40,6 +40,19 @@ def create_routine_exercise_table(meta):
     return t
 
 
+def create_cycle_table(meta):
+    t = Table('Cycle',
+              meta,
+              Column('id', String(3),
+                     primary_key=True, nullable=False),
+              Column('name', String(150), nullable=False),
+              Column('weeks', Integer(), nullable=False),
+              Column('days', Integer(), nullable=False),
+              Column('sequence', Integer(), nullable=False),
+              Column('last_logged', String(3), nullable=False))
+    return t
+
+
 def create_database_engine():
     db_uri = 'sqlite://'
     engine = create_engine(db_uri)
@@ -48,6 +61,7 @@ def create_database_engine():
     create_exercise_table(meta)
     create_routine_table(meta)
     create_routine_exercise_table(meta)
+    create_cycle_table(meta)
 
     # Create all tables in meta
     meta.create_all()

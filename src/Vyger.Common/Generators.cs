@@ -31,6 +31,11 @@ namespace Vyger.Common
             return RandomId("r", 2);
         }
 
+        public static string CycleId()
+        {
+            return RandomId("c", 3);
+        }
+
         /// <summary>
         ///
         /// </summary>

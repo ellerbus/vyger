@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -28,7 +30,7 @@ namespace Vyger.Web.Pages.Routines
 
         public void OnGet()
         {
-            Routines = _routines.GetRoutineCollection();
+            Routines = _routines.GetRoutineCollection().OrderBy(x => x.Name);
         }
 
         #endregion
@@ -36,7 +38,7 @@ namespace Vyger.Web.Pages.Routines
         #region Properties
 
         [BindProperty]
-        public RoutineCollection Routines { get; set; }
+        public IEnumerable<Routine> Routines { get; set; }
 
         #endregion
     }
