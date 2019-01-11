@@ -116,7 +116,7 @@ namespace Vyger.Common.Services
         {
             LogExerciseCollection exercises = GetLogExerciseCollection();
 
-            //_storage.StoreContents(StorageName, exercises);
+            _storage.StoreContents(StorageName, exercises);
         }
 
         #endregion

@@ -123,7 +123,7 @@ namespace Vyger.Common.Services
         {
             CycleCollection cycles = GetCycleCollection();
 
-            //_storage.StoreContents(StorageName, cycles);
+            _storage.StoreContents(StorageName, cycles);
         }
 
         #endregion

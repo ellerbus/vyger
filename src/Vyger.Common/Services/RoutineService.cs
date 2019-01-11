@@ -121,7 +121,7 @@ namespace Vyger.Common.Services
         {
             RoutineCollection routines = GetRoutineCollection();
 
-            //_storage.StoreContents(StorageName, routines);
+            _storage.StoreContents(StorageName, routines);
         }
 
         #endregion

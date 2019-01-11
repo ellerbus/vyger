@@ -17,7 +17,7 @@ namespace Vyger.Web
                 yield return new SelectListItem()
                 {
                     Value = (i + 1).ToString(),
-                    Text = "{0} Week{1} per Cycle".FormatArgs(i + 1, i > 1 ? "s" : ""),
+                    Text = "{0} Week{1} per Cycle".FormatArgs(i + 1, i > 0 ? "s" : ""),
                     Selected = (i + 1) == week
                 };
             }
@@ -30,7 +30,7 @@ namespace Vyger.Web
                 yield return new SelectListItem()
                 {
                     Value = (i + 1).ToString(),
-                    Text = "{0} Day{1} per Week".FormatArgs(i + 1, i > 1 ? "s" : ""),
+                    Text = "{0} Day{1} per Week".FormatArgs(i + 1, i > 0 ? "s" : ""),
                     Selected = (i + 1) == day
                 };
             }
@@ -43,7 +43,7 @@ namespace Vyger.Web
                 yield return new SelectListItem()
                 {
                     Value = i.ToString(),
-                    Text = "{0} rep{1}".FormatArgs(i, i > 1 ? "s" : ""),
+                    Text = "{0} rep{1}".FormatArgs(i, i > 0 ? "s" : ""),
                     Selected = i == reps
                 };
             }
