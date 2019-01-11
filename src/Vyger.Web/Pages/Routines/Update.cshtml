@@ -26,24 +26,9 @@
   </div>
 
   <div class="form-group">
-    <label asp-for="Routine.Sets"></label>
-  </div>
-
-  <div data-bind="foreach: sets">
-    <div class="form-group p-0 m-0 mb-1">
-      <input type="hidden" name="Routine.Sets.Index" data-bind="value: $index" />
-      <div class="input-group">
-        <input class="form-control" data-bind="value: $data, attr: { name: 'Routine.Sets['+$index()+']' }" />
-        <div class="input-group-append">
-          <span class="input-group-text" data-bind="click: $root.removeSet">
-            <span class="fa fa-fw fa-times text-danger pointer"></span>
-          </span>
-          <span class="input-group-text" data-bind="click: $root.addSet">
-            <span class="fa fa-fw fa-plus text-muted pointer"></span>
-          </span>
-        </div>
-      </div>
-    </div>
+    <label asp-for="Routine.WorkoutPattern"></label>
+    <input class="form-control workout-sets" asp-for="Routine.WorkoutPattern" />
+    <span class="form-text text-danger" asp-validation-for="Routine.WorkoutPattern"></span>
   </div>
 
   <div class="form-group text-right mt-3">

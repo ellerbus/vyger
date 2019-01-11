@@ -31,23 +31,6 @@ namespace Vyger.Common.Validators
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty()
                 .InclusiveBetween(Constants.MinDays, Constants.MaxDays);
-
-            RuleFor(x => x.Sets)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .Must(BeFormatted);
-        }
-
-        private bool BeFormatted(Routine context, string[] arg)
-        {
-            if (arg != null)
-            {
-                context.Sets = arg
-                    .Where(x => x.IsNotEmpty())
-                    .SelectMany(x => new WorkoutSet(x).Format(true))
-                    .ToArray();
-            }
-
-            return true;
         }
 
         private bool BeUnique(Routine context, string arg)

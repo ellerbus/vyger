@@ -31,8 +31,8 @@ div.form-control {
 }
 
 .workout-sets {
-    font-size: .9em;
-    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.05em;
+    font-family: 'Inconsolata', monospace;
 }
 
 table th.create-col,

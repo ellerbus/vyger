@@ -52,11 +52,13 @@ namespace Vyger.Web.Pages.Routines
                     nameof(Routine.Name),
                     nameof(Routine.Weeks),
                     nameof(Routine.Days),
-                    nameof(Routine.Sets),
-                    //nameof(Routine.WorkoutPattern),
+                    nameof(Routine.WorkoutPattern),
                 };
 
                 Routine cache = _routines.GetRoutine(id);
+
+                //  HACK force a set on sets
+                cache.WorkoutPattern = Routine.WorkoutPattern;
 
                 Routine.OverlayFrom(cache, inputs);
 

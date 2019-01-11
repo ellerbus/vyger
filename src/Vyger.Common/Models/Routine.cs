@@ -83,6 +83,16 @@ namespace Vyger.Common.Models
         [JsonProperty("sets")]
         public string[] Sets { get; set; }
 
+        ///	<summary>
+        ///
+        ///	</summary>
+        [JsonIgnore()]
+        public string WorkoutPattern
+        {
+            get { return WorkoutSet.Combine(Sets, true); }
+            set { Sets = WorkoutSet.Expand(value, true); }
+        }
+
         /// <summary>
         ///
         /// </summary>
