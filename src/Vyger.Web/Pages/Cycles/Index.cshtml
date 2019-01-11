@@ -36,7 +36,9 @@
       <td class="create-col">
         <a class="btn btn-outline-secondary float-right"
            asp-page="/Cycles/Exercises/Index"
-           asp-route-id="@cycle.Id">
+           asp-route-id="@cycle.Id"
+           asp-route-week="@cycle.LoggedWeek"
+           asp-route-day="@cycle.LoggedDay">
           View
         </a>
       </td>

@@ -27,6 +27,14 @@ namespace Vyger.Common.Models
             Name = primary.Name;
         }
 
+        public LogExercise(DateTime date, CycleExercise primary)
+            : this(date, primary as Exercise)
+        {
+            Sequence = primary.Sequence;
+
+            Sets = primary.Sets.ToArray();
+        }
+
         #endregion
 
         #region ToString/DebuggerDisplay

@@ -123,6 +123,34 @@ namespace Vyger.Common.Models
         [JsonProperty("lastLogged")]
         public string LastLogged { get; set; }
 
+        /// <summary>
+        ///
+        /// </summary>
+        [JsonIgnore()]
+        public int LoggedWeek
+        {
+            get
+            {
+                string week = LastLogged.AssertNotNull("0:0").GetLeftOf(":");
+
+                return int.Parse(week);
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        [JsonIgnore()]
+        public int LoggedDay
+        {
+            get
+            {
+                string day = LastLogged.AssertNotNull("0:0").GetRightOf(":");
+
+                return int.Parse(day);
+            }
+        }
+
         ///	<summary>
         /// week:day
         ///	</summary>

@@ -1,34 +1,64 @@
 @page "{id}"
 @using Augment
+@using Vyger.Common
 @model Vyger.Web.Pages.CycleExercises.IndexModel
 @{
   ViewData["Title"] = "Cycle Exercises";
 }
 
-<partial name="Weeks" model="@Model" />
-<partial name="Days" model="@Model" />
+<form method="post">
+  <partial name="Weeks" model="@Model" />
+  <partial name="Days" model="@Model" />
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Exercise</th>
-      <th>Workout</th>
-    </tr>
-  </thead>
-  <tbody>
-    @foreach (var exercise in Model.Exercises)
-    {
+  <table class="table">
+    <thead>
       <tr>
-        <td>
-          @exercise.DisplayName
-        </td>
-        <td>
-          @exercise.WorkoutPattern
-        </td>
+        <th>Exercise</th>
+        <th>Workout</th>
       </tr>
+    </thead>
+    <tbody>
+      @foreach (var exercise in Model.Exercises)
+      {
+        <tr>
+          <td>
+            @exercise.DisplayName
+          </td>
+          <td>
+            @exercise.WorkoutPattern
+          </td>
+        </tr>
+      }
+    </tbody>
+    @if (Model.CanLogWorkout)
+    {
+      <tfoot>
+        <tr>
+          <td></td>
+          <td>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <label class="input-group-text">Select a Date</label>
+              </div>
+              <select class="custom-select" asp-for="@Model.SelectedDate">
+                <option value="@Model.SelectedDate.ToYMD()">@Model.SelectedDate.ToString("ddd MMM dd")</option>
+                @foreach (var dt in Model.AvailableDates)
+                {
+                  <option value="@dt.ToYMD()">@dt.ToString("ddd MMM dd")</option>
+                }
+              </select>
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary">
+                  Log Workout
+                </button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tfoot>
     }
-  </tbody>
-</table>
+  </table>
+</form>
 
 @section Breadcrumbs{
   <nav>
