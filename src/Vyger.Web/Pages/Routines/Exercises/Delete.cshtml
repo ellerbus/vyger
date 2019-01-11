@@ -14,13 +14,13 @@
   </div>
 
   <div class="form-group text-right">
-    <button class="btn btn-danger">Delete</button>
-    <a class="btn btn-outline-secondary"
+    <a class="btn btn-outline-secondary float-left"
        asp-page="/Routines/Exercises/Index"
        asp-route-id="@Model.Routine.Id"
        asp-route-day="@Model.SelectedDay">
       Cancel
     </a>
+    <button class="btn btn-danger">Delete</button>
   </div>
 </form>
 

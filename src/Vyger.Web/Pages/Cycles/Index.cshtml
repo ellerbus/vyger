@@ -34,7 +34,9 @@
         @cycle.LastLogged
       </td>
       <td class="create-col">
-        <a class="btn btn-outline-secondary float-right" asp-page="/Cycles/Update">
+        <a class="btn btn-outline-secondary float-right"
+           asp-page="/Cycles/Exercises/Index"
+           asp-route-id="@cycle.Id">
           View
         </a>
       </td>

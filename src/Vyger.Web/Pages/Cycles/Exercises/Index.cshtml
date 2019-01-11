@@ -18,28 +18,12 @@
   <tbody>
     @foreach (var exercise in Model.Exercises)
     {
-      <tr id="@(exercise.Id)">
+      <tr>
         <td>
-          <a class="pointer float-right"
-             asp-page="/Cycles/Exercises/Delete"
-             asp-route-id="@Model.Cycle.Id"
-             asp-route-day="@Model.SelectedDay"
-             asp-route-exercise="@exercise.Id">
-            <span class="fa fa-fw fa-times text-danger"></span>
-          </a>
           @exercise.DisplayName
         </td>
         <td>
-          @exercise.Sets.Join(", ")
-        </td>
-        <td>
-          <a class="btn btn-outline-secondary float-right"
-             asp-page="/Cycles/Exercises/Update"
-             asp-route-id="@Model.Cycle.Id"
-             asp-route-day="@Model.SelectedDay"
-             asp-route-exercise="@exercise.Id">
-            Update
-          </a>
+          @exercise.WorkoutPattern
         </td>
       </tr>
     }
@@ -51,16 +35,25 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a asp-page="/Index">Home</a></li>
       <li class="breadcrumb-item">
-        <a asp-page="/Cycles/Update" asp-route-id="@Model.Cycle.Id">
-          @Model.Cycle.Name
+        <a asp-page="/Cycles/Index">
+          Cycles
         </a>
       </li>
       <li class="breadcrumb-item active">
-        Exercises
+        @Model.Cycle.Name
         <i class="fa fa-fw fa-filter text-muted"></i>
         <span>Week=</span>@Model.SelectedWeek
         <span>Day=</span>@Model.SelectedDay
       </li>
     </ol>
   </nav>
+}
+
+@section Scripts {
+  <script type="text/javascript">
+    $(function ()
+    {
+      $('div.alert').fadeOut(3000);
+    });
+  </script>
 }

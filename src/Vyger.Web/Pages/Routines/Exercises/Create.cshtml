@@ -7,18 +7,6 @@
 <form method="post" class="col-lg-6 col-md-6 mx-auto">
   <div asp-validation-summary="All"></div>
 
-  @*
-    <div class="form-group mb-1">
-      <select class="form-control" asp-for="Exercise.Group" asp-items="Html.GetEnumSelectList<ExerciseGroups>()"></select>
-      <span class="form-text text-danger" asp-validation-for="Exercise.Group"></span>
-    </div>
-
-    <div class="form-group mb-1">
-      <select class="form-control" asp-for="Exercise.Category" asp-items="Html.GetEnumSelectList<ExerciseCategories>()"></select>
-      <span class="form-text text-danger" asp-validation-for="Exercise.Category"></span>
-    </div>
-  *@
-
   <div class="form-group">
     <select class="form-control" asp-for="Exercise.Id">
       <option value="">(select exercise)</option>
@@ -56,11 +44,11 @@
   </div>
 
   <div class="form-group text-right mt-3">
-    <button class="btn btn-primary">Save</button>
-    <a class="btn btn-outline-secondary"
+    <a class="btn btn-outline-secondary float-left"
        asp-page="/Routines/Exercises/Index"
        asp-route-id="@Model.Routine.Id"
        asp-route-day="@Model.SelectedDay">Cancel</a>
+    <button class="btn btn-primary">Save</button>
   </div>
 </form>
 

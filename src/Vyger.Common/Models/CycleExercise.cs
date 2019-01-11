@@ -26,6 +26,8 @@ namespace Vyger.Common.Models
             Week = primary.Week;
             Day = primary.Day;
 
+            Sequence = primary.Sequence;
+
             Sets = primary.Sets.ToArray();
             Plan = primary.Sets.ToArray();
         }
@@ -94,8 +96,8 @@ namespace Vyger.Common.Models
         [JsonIgnore()]
         public string WorkoutPattern
         {
-            get { return WorkoutSet.Combine(Plan, true); }
-            set { Plan = WorkoutSet.Expand(value, true); }
+            get { return WorkoutSet.Combine(Plan, false); }
+            set { Plan = WorkoutSet.Expand(value, false); }
         }
 
         #endregion

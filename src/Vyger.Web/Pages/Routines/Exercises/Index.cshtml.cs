@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Augment;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -44,37 +45,64 @@ namespace Vyger.Web.Pages.RoutineExercises
             return new PageResult();
         }
 
-        public IActionResult OnPostSortExercises(string id, int week = 1, int day = 1)
+        public IActionResult OnPost(string id, int week = 1, int day = 1)
         {
             LoadRoutine(id, week, day);
 
-            SortExercises();
-
-            Exercises = Routine.Exercises.Filter(week, day).ToList();
+            Exercises = UpdateExercises().ToList();
 
             return new PageResult();
         }
 
-        private void SortExercises()
+        private IEnumerable<RoutineExercise> UpdateExercises()
         {
-            string[] ids = Request.Form["ids"].ToString().Split(',');
+            IList<RoutineExercise> all = Routine.Exercises
+                .Filter(SelectedWeek, SelectedDay)
+                .ToList();
 
-            for (int i = 0; i < ids.Length; i++)
+            for (int i = 0; i < Exercises.Count; i++)
             {
-                string id = ids[i];
+                RoutineExercise input = Exercises[i];
 
-                IEnumerable<RoutineExercise> exercises = Routine.Exercises.FilterForUpdating(SelectedDay, id);
+                RoutineExercise exercise = all.First(x => x.Id.IsSameAs(input.Id));
 
-                foreach (RoutineExercise exercise in exercises)
+                exercise.WorkoutPattern = input.WorkoutPattern;
+
+                exercise.Sequence = (i + 1) * 100;
+
+                IEnumerable<RoutineExercise> sequences = Routine.Exercises.FilterForUpdating(SelectedDay, exercise.Id);
+
+                foreach (RoutineExercise seq in sequences)
                 {
-                    exercise.Sequence = (i + 1) * 100;
+                    seq.Sequence = exercise.Sequence;
                 }
+
+                yield return exercise;
             }
 
             _routines.UpdateRoutine(Routine);
 
-            this.FlashInfo("Exercise Sequences Saved Successfully");
+            this.FlashInfo("Routine Exercises Saved Successfully");
         }
+
+        //private void SortExercises()
+        //{
+        //    string[] ids = Request.Form["ids"].ToString().Split(',');
+
+        //    for (int i = 0; i < ids.Length; i++)
+        //    {
+        //        string id = ids[i];
+
+        //        IEnumerable<RoutineExercise> exercises = Routine.Exercises.FilterForUpdating(SelectedDay, id);
+
+        //        foreach (RoutineExercise exercise in exercises)
+        //        {
+        //            exercise.Sequence = (i + 1) * 100;
+        //        }
+        //    }
+
+        //    this.FlashInfo("Exercise Sequences Saved Successfully");
+        //}
 
         private void LoadRoutine(string id, int week, int day)
         {

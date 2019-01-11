@@ -64,7 +64,7 @@ namespace Vyger.Web.Pages.RoutineExercises
 
             this.FlashSuccess($"Saved Routine Exercise");
 
-            return Redirect("~/Routines/Exercises/Index/" + id);
+            return Redirect($"~/Routines/Exercises/Index/{id}?day={SelectedDay}");
         }
 
         private void LoadRoutine(string id, int day)

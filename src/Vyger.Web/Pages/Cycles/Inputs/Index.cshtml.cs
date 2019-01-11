@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Augment;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -43,6 +44,11 @@ namespace Vyger.Web.Pages.CycleInputs
                 this.FlashWarning($"Could not find requested Cycle");
 
                 return Redirect("~/Cycles/Index");
+            }
+
+            if (Cycle.LastLogged.IsNotEmpty())
+            {
+                return Redirect("~/Cycles/Exercises/Index/" + Cycle.Id);
             }
 
             LoadInputs();

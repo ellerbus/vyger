@@ -16,8 +16,11 @@
   </div>
   {% endfor %}
   <div class="form-group text-right">
+    <a class="btn btn-outline-secondary float-left"
+       asp-page="/{{ names.base_classes() }}/Index">
+      Cancel
+    </a>
     <button class="btn btn-primary">Save</button>
-    <a class="btn btn-outline-secondary" asp-page="/{{ names.base_classes() }}/Index">Cancel</a>
   </div>
 </form>
 
