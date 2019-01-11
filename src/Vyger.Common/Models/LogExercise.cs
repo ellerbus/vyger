@@ -32,7 +32,7 @@ namespace Vyger.Common.Models
         {
             Sequence = primary.Sequence;
 
-            Sets = primary.Sets.ToArray();
+            Sets = primary.Plan.ToArray();
         }
 
         #endregion
