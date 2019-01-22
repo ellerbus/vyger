@@ -111,7 +111,11 @@ namespace Vyger.Web.Pages.CycleExercises
         {
             get
             {
-                if (SelectedWeek >= Cycle.LoggedWeek)
+                if (SelectedWeek > Cycle.LoggedWeek)
+                {
+                    return true;
+                }
+                else
                 {
                     if (SelectedDay > Cycle.LoggedDay)
                     {
@@ -139,6 +143,9 @@ namespace Vyger.Web.Pages.CycleExercises
                 yield return dt.AddDays(-4);
                 yield return dt.AddDays(-5);
                 yield return dt.AddDays(-6);
+                yield return dt.AddDays(-7);
+                yield return dt.AddDays(-8);
+                yield return dt.AddDays(-9);
             }
         }
 
