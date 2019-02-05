@@ -78,6 +78,8 @@ namespace Vyger.Web.Pages.CycleInputs
                 input.Pullback = x.Pullback;
             }
 
+            _cycles.CalculateCycle(Cycle);
+
             _cycles.UpdateCycle(Cycle);
 
             this.FlashInfo("Cycle Inputs Saved Successfully");
@@ -95,30 +97,86 @@ namespace Vyger.Web.Pages.CycleInputs
                 .OrderBy(x => x.DisplayName)
                 .ToList();
 
-            var all = _logs.GetLogExerciseCollection();
+            OverlayInputs();
+        }
+
+        private void OverlayInputs()
+        {
+            LogExerciseCollection all = _logs.GetLogExerciseCollection();
+
+            Cycle previous = _cycles.GetCycleCollection().FirstOrDefault(x => x.Sequence == Cycle.Sequence - 1);
+
+            DateTime now = DateTime.Now.Date;
+
+            DateTime then = now.AddDays(previous.Weeks * -7);
 
             //  do we need to lookup stuff
-            foreach (var input in Inputs.Where(x => x.OneRepMax == 0))
+            foreach (CycleInput input in Inputs.Where(x => x.OneRepMax == 0))
             {
-                var log = all.FilterMax(input.Id);
+                LogExercise max = all.FilterMax(input.Id);
 
-                //  find the max
-                double orm = log.OneRepMax;
+                LogExercise recent = all.FilterMaxByDateRange(input.Id, then, now);
 
-                WorkoutSet set = log.Sets
-                    .Select(x => new WorkoutSet(x))
-                    .First(x => x.OneRepMax == orm);
+                CycleInput goal = previous?.Inputs.FirstOrDefault(x => x.Id.IsSameAs(input.Id));
 
-                input.Weight = (int)set.Weight;
-                input.Reps = set.Reps;
-
-                TimeSpan time = DateTime.Now.Date - log.Date;
-
-                if (time.TotalDays > 90)
+                if (recent != null && goal != null)
                 {
-                    input.Pullback = 10;
+                    //  was our most recent above or below our goal
+                    if (recent.OneRepMax > goal.OneRepMax)
+                    {
+                        WorkoutSet s = GetMaxSet(recent);
+
+                        input.Weight = (int)s.Weight;
+                        input.Reps = s.Reps;
+                        input.Pullback = -3;
+
+                        continue;
+                    }
+                }
+
+                if (max != null && recent != null)
+                {
+                    //  was our recent within 10% of our max
+                    if (recent.OneRepMax > max.OneRepMax * 0.90)
+                    {
+                        WorkoutSet s = GetMaxSet(recent);
+
+                        input.Weight = (int)s.Weight;
+                        input.Reps = s.Reps;
+                        input.Pullback = -3;
+
+                        continue;
+                    }
+                }
+
+                if (max != null)
+                {
+                    WorkoutSet set = GetMaxSet(max);
+
+                    input.Weight = (int)set.Weight;
+                    input.Reps = set.Reps;
+
+                    //  max over 90 days pullback 10%
+                    TimeSpan time = DateTime.Now.Date - max.Date;
+
+                    if (time.TotalDays > 90)
+                    {
+                        input.Pullback = 10;
+                    }
+
+                    continue;
                 }
             }
+        }
+
+        private WorkoutSet GetMaxSet(LogExercise max)
+        {
+            //  find the max
+            double orm = max.OneRepMax;
+
+            return max.Sets
+                .Select(x => new WorkoutSet(x))
+                .First(x => x.OneRepMax == orm);
         }
 
         public IEnumerable<SelectListItem> GetRepsSelectList(int reps)

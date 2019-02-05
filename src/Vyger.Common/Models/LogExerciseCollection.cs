@@ -69,6 +69,25 @@ namespace Vyger.Common.Models
         ///
         /// </summary>
         /// <returns></returns>
+        public LogExercise FilterMaxByDateRange(string id, DateTime start, DateTime end)
+        {
+            LogExercise max = null;
+
+            foreach (LogExercise log in this.FilterDateRange(start, end).Where(x => x.Id.IsSameAs(id)))
+            {
+                if (max == null || log.OneRepMax > max.OneRepMax)
+                {
+                    max = log;
+                }
+            }
+
+            return max;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<LogExercise> FilterForUpdating(DateTime date)
         {
             return this.Where(x => x.Date == date);

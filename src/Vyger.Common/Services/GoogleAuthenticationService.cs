@@ -115,7 +115,6 @@ namespace Vyger.Common.Services
             return new[]
             {
                 "email",
-                "https://www.googleapis.com/auth/plus.me",
                 "https://www.googleapis.com/auth/drive.appdata"
             };
         }

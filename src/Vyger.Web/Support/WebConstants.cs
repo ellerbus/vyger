@@ -51,6 +51,13 @@ namespace Vyger.Web
 
         public static IEnumerable<SelectListItem> GetPullbackSelectListItems(int pullback)
         {
+            yield return new SelectListItem()
+            {
+                Value = "-3",
+                Text = "+3%",
+                Selected = -3 == pullback
+            };
+
             for (int i = Constants.MinPullback; i < Constants.MaxPullback; i += 5)
             {
                 yield return new SelectListItem()

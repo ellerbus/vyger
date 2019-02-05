@@ -8,12 +8,6 @@ namespace Vyger.Common.Models
 {
     public class WorkoutSet
     {
-        #region Members
-
-        //private static readonly Regex _regex = new Regex(Constants.Regex.WorkoutPatterns.WorkoutSet, RegexOptions.IgnoreCase | RegexOptions.Compiled);
-
-        #endregion
-
         #region Constructors
 
         public WorkoutSet(string set)
@@ -249,7 +243,7 @@ namespace Vyger.Common.Models
         /// <summary>
         ///
         /// </summary>
-        public double RepMax { get; set; }
+        public int RepMax { get; set; }
 
         /// <summary>
         ///

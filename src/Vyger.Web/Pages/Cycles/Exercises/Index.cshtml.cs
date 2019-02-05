@@ -86,10 +86,25 @@ namespace Vyger.Web.Pages.CycleExercises
 
         private void LoadCycle(string id, int week, int day)
         {
-            SelectedWeek = week;
-            SelectedDay = day;
-
             Cycle = _cycles.GetCycle(id);
+
+            SelectedWeek = BoundToLimits(week, 1, Cycle.Weeks);
+            SelectedDay = BoundToLimits(day, 1, Cycle.Days);
+        }
+
+        private int BoundToLimits(int selected, int min, int max)
+        {
+            if (selected < min)
+            {
+                return min;
+            }
+
+            if (selected > max)
+            {
+                return max;
+            }
+
+            return selected;
         }
 
         private void LoadExercises()
